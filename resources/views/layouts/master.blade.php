@@ -114,6 +114,8 @@
     <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.js"></script>
     <script src="assets/js/init/fullcalendar-init.js"></script>
+    <script type="text/javascript" src="{{ asset('js/webcam.min.js') }}"></script>
+
     @stack('scripts')
 </body>
 </html>

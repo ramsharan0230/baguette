@@ -1,9 +1,13 @@
 @extends('layouts.master')
-@section('title','Dashboard')
+@section('title','Hygiene  | Dashboard')
 @push('stylesheets')
 <link rel="stylesheet" href="{{ asset('assets/css/cs-skin-elastic.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/css/lib/datatable/dataTables.bootstrap.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/bootstrap-datetimepicker.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+<style>
+    #results { float:right; margin:20px; padding:20px; border:1px solid; background:#ccc; }
+</style>
 @endpush
 @section('content')
 <div class="col-md-12">
@@ -50,6 +54,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <form action="{{ route('inspection.store') }}" method="POST">
+                {{ csrf_field() }}
                 <div class="modal-header">
                     <h5 class="modal-title" id="addlocationModalLabel">
                         <h4 class="card-title"><strong>Add Inpections</strong></h4>
@@ -58,6 +63,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+                <div id="results">Your captured image will appear here...</div>
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="location">Location</label>
@@ -66,7 +72,7 @@
 
                     <div class="form-group">
                         <label for="date">Date</label>
-                        <input type="text" class="form-control" id="date" placeholder="Add Date..." name="date">
+                        <input class="form-control" type="date" name="starting_date"  value="{{old('starting_date')}}">
                     </div>
 
                     <div class="form-group">
@@ -76,7 +82,7 @@
 
                     <div class="form-group">
                         <label for="picture">Picture</label>
-                        <input type="text" class="form-control" id="picture" placeholder="Take Picture..." name="picture">
+                        <input type=button value="Take Snapshot" onClick="take_snapshot()">
                     </div>
 
                     <div class="form-group">
@@ -100,12 +106,12 @@
 
                     <div class="form-group">
                         <label for="closing_date">Closing Date</label>
-                        <input type="text" class="form-control" name="closing_date" placeholder="Add Closing date...">
+                        <input class="form-control" type="date" name="closing_date" placeholder="Add Closing date...">
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary btn-sm">Save</button>
+                    <button type="submit" class="btn btn-primary btn-sm">Save</button>
                 </div>
             </form>
         </div>
@@ -124,7 +130,24 @@
 <script src="{{ asset('assets/js/lib/data-table/buttons.print.min.js') }}"></script>
 <script src="{{ asset('assets/js/lib/data-table/buttons.colVis.min.js') }}"></script>
 <script src="{{ asset('assets/js/init/datatables-init.js') }}"></script>
-
+<script type="text/javascript" src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.min.js"> </script>
+<script type="text/javascript" src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.pt-BR.js"></script>
+<script src="text/javascript">
+    $(function () {
+        $('#datetimepicker1').datetimepicker({
+            dateFormat: "dd-mm-yy", 
+        });
+    });
+</script>
+<script language="JavaScript">
+    Webcam.set({
+        width: 320,
+        height: 240,
+        image_format: 'jpeg',
+        jpeg_quality: 90
+    });
+    Webcam.attach( '#my_camera' );
+</script>
 
 <script type="text/javascript"> 
     function addNewRow(){
@@ -147,5 +170,17 @@
         debugger
     }
         
+</script>
+
+<script language="JavaScript">
+    function take_snapshot() {
+        // take snapshot and get image data
+        Webcam.snap( function(data_uri) {
+            // display results in page
+            document.getElementById('results').innerHTML = 
+                '<h2>Here is your image:</h2>' + 
+                '<img src="'+data_uri+'"/>';
+        } );
+    }
 </script>
 @endpush
