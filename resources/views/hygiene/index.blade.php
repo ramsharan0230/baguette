@@ -2,6 +2,7 @@
 @section('title','Dashboard')
 @push('stylesheets')
 <link rel="stylesheet" href="assets/css/cs-skin-elastic.css">
+<link rel="stylesheet" href="{{ asset('assets/css/bootstrap-datetimepicker.min.css') }}">
 <link rel="stylesheet" href="assets/css/lib/datatable/dataTables.bootstrap.min.css">
 <link rel="stylesheet" href="assets/css/style.css">
 @endpush
@@ -37,7 +38,7 @@
                         <td>dfgsdfgsdg</td>
                         <td>Edinburgh</td>
                         <td>$320,800</td>
-                        <td><button class="btn btn-primary btn-sm" onclick="addNewRow()">New Data</button></td>
+                        <td>01/01/2021 <button class="btn btn-primary btn-sm" style="float: right;" onclick="addNewRow()"> <i class="fa fa-plus"></i></button></td>
                     </tr>
                 </tbody>
             </table>
@@ -49,7 +50,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <form action="">
-                <div class="modal-header">
+                <div class="modal-header" style="background: #4CAFE0 !important; color:#fff">
                     <h5 class="modal-title" id="addlocationModalLabel">Add Inpections</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -109,6 +110,57 @@
     </div>
 </div>
 
+{{-- Closing date model --}}
+<div class="modal fade" id="closingDateModal" tabindex="-1" role="dialog" aria-labelledby="closingDateModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="closingDateModalLabel">Closing Date</h5> 
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group" >
+                    <label for="Select date">Select Closing Date</label>
+                    <input class="form-control" type="date" name="date"  value="{{old('date')}}">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary btn-sm">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- Status --}}
+<div class="modal fade" id="selectStatusModel" tabindex="-1" role="dialog" aria-labelledby="selectStatusModelLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="selectStatusModelLabel">Select Status</h5> 
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group" >
+                    <label for="Select date">Select Status</label>
+                    <select name="status" id="status" class="form-control">
+                        <option value="">Select Status</option>
+                        <option value="1">Open</option>
+                        <option value="0">Close/option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary btn-sm">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 @push('scripts')
 <script src="assets/js/lib/data-table/datatables.min.js"></script>
@@ -121,7 +173,8 @@
 <script src="assets/js/lib/data-table/buttons.print.min.js"></script>
 <script src="assets/js/lib/data-table/buttons.colVis.min.js"></script>
 <script src="assets/js/init/datatables-init.js"></script>
-
+<script type="text/javascript" src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.min.js"> </script>
+<script type="text/javascript" src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.pt-BR.js"></script>
 
 <script type="text/javascript"> 
     function addNewRow(){
@@ -135,8 +188,8 @@
                     "2011/04/25",
                     "2011/04/25",
                     "2011/04/25",
-                    "2011/04/25",
-                    "<button type='button' class='btn btn-success btn-sm mb-1' data-toggle='modal' data-target='#addlocationModal'>Add</button>"
+                    "Open <button type='button' class='btn btn-primary btn-sm mb-1' data-toggle='modal' data-target='#selectStatusModel'>  <i class='fa fa-pencil'></i></button>",
+                    "20/01/2021 <button type='button' class='btn btn-primary btn-sm mb-1' data-toggle='modal' data-target='#closingDateModal'>  <i class='fa fa-calendar-o'></i></button>"
             ]).draw();
     }
     
