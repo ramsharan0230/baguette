@@ -21,8 +21,9 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::group(['middleware'=>'hygiene'], function(){
-    Route::get('hygiene', 'HygieneController@index')->name('hygiene');
+Route::group(['middleware'=>'hygiene', 'prefix'=>'hygiene'], function(){
+    Route::get('/', 'HygieneController@index')->name('hygiene');
+    Route::resource('inspection', 'InspectionController');
 });
 
 Route::group(['middleware'=>'sitemanager'], function(){
