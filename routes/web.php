@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->middleware('auth');
 
 Auth::routes();
 
@@ -24,6 +24,15 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['middleware'=>'hygiene', 'prefix'=>'hygiene'], function(){
     Route::get('/', 'HygieneController@index')->name('hygiene');
     Route::resource('inspection', 'InspectionController');
+    Route::post('inspection/edit/location', 'InspectionController@editLocation')->name('inspection.edit.location');
+    Route::post('inspection/edit/date', 'InspectionController@editDate')->name('inspection.edit.date');
+    Route::post('inspection/edit/findgings', 'InspectionController@editFindings')->name('inspection.edit.findings');
+    Route::post('inspection/edit/pca', 'InspectionController@editPca')->name('inspection.edit.pca');
+    Route::post('inspection/edit/accountability', 'InspectionController@editAccountability')->name('inspection.edit.accountability');
+    Route::post('inspection/edit/status', 'InspectionController@editStatus')->name('inspection.edit.status');
+    Route::post('inspection/edit/closing', 'InspectionController@editClosingDate')->name('inspection.edit.closing');
+    Route::get('inspection/{id}/approve', 'InspectionController@approveInspection')->name('inspection.approve');
+    Route::post('inspection/{id}/assign', 'InspectionController@assignInspection')->name('inspection.assign');
 });
 
 Route::group(['middleware'=>'sitemanager'], function(){

@@ -9,5 +9,10 @@ class Inspection extends Model
 {
     use HasFactory;
     protected $table = 'inspections';
-    protected $fillable = ['location', 'start_date', 'findings', 'picture', 'pca', 'accountibility', 'closing_date', 'remarks', 'status', 'user_id'];
+    protected $fillable = ['location', 'start_date', 'findings', 'picture', 'pca', 'accountibility', 'closing_date', 'status', 
+    'approvedBy_hygiene', 'approvedBy_siteman', 'approvedBy_opman', 'approvedBy_sropman',  'user_id'];
+
+    public function sitemanager(){
+        return $this->belongsTo('App\Models\SiteManager');
+    }
 }

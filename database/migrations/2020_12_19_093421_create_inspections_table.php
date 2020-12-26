@@ -22,10 +22,13 @@ class CreateInspectionsTable extends Migration
             $table->text('pca', 10000)->nullable();
             $table->string('accountibility')->nullable();
             $table->string('closing_date')->nullable();
-            $table->text('remarks', 10000)->nullable();
             $table->boolean('status', 0, 1)->default(1);
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
+            $table->boolean('approvedBy_hygiene', 0, 1)->default(0);
+            $table->boolean('approvedBy_siteman', 0, 1)->default(0);
+            $table->boolean('approvedBy_opman', 0, 1)->default(0);
+            $table->boolean('approvedBy_sropman', 0, 1)->default(0);
             $table->timestamps();
         });
     }
