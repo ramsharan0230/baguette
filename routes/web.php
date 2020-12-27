@@ -37,6 +37,7 @@ Route::group(['middleware'=>'hygiene', 'prefix'=>'hygiene'], function(){
 
 Route::group(['middleware'=>'sitemanager'], function(){
     Route::get('sitemanager', 'SiteManagerController@index')->name('sitemanager');
+    Route::get('inspection/{id}/approved_by_siteman', 'SiteManagerController@approvedBySiteMan')->name('inspection.approved_by_siteman');
 });
 
 Route::group(['middleware'=>'OpManager'], function(){
@@ -45,5 +46,6 @@ Route::group(['middleware'=>'OpManager'], function(){
 
 Route::group(['middleware'=>'SrOpManager'], function(){
     Route::get('sropmanager', 'SeniorOperationManagerController@index')->name('sropmanager');
+    Route::get('sropmanager/users', 'SeniorOperationManagerController@users')->name('sropmanager.users');
 });
 

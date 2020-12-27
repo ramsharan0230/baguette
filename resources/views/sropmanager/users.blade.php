@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title','Senior Operation Manager  | Dashboard')
+@section('title','Senior Operation Manager  | Users')
 @push('stylesheets')
 <link rel="stylesheet" href="{{ asset('assets/css/cs-skin-elastic.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/css/lib/datatable/dataTables.bootstrap.min.css') }}">
@@ -16,44 +16,38 @@
 <div class="col-md-12">
     <div class="card">
         <div class="card-header" style="background: #4CAFE0 !important; color:#fff">
-            <strong class="card-title">Inspections</strong>
+            <strong class="card-title">Users</strong>
         </div>
         <div class="card-body">
             <table id="bootstrap-data-table" class="table table-striped table-bordered">
                 <thead>
                     <tr>
                         <th>SN</th>
-                        <th>Area/Location Building/Level</th>
-                        <th>Date</th>
-                        <th>Findings</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
                         <th>Picture</th>
-                        <th>Proposed Corrective Action</th>
-                        <th>Accoutibility</th>
-                        <th>Closing Date</th>
                         <th>Status</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($inspections as $key=>$inspection)
+                    @forelse ($users as $key=>$user)
                     <tr>
                         <td>{{ $key+1 }}</td>
-                        <td>{{ $inspection->location }} </td>
-                        <td>{{ $inspection->start_date }} </td>
-                        <td>{{ $inspection->findings }} </td>
-                        <td><img src="{{ asset('images/inspection_files').'/'.$inspection->picture }}" class="img-thumbnail" height="200px" height="200px" ></td>
-                        <td>{{ $inspection->pca }} </td>
-                        <td>{{ $inspection->accountibility }} </td>
-                        <td>{{ $inspection->closing_date }} </td>
+                        <td>{{ $user->name }} </td>
+                        <td>{{ $user->email }} </td>
+                        <td>{{ $user->role->name }} </td>
+                        <td><img src="{{ asset('images/avatar/1.jpg') }}" class="img-thumbnail" height="200px" height="200px" ></td>
                         <td>
-                            @if($inspection->approvedBy_sropman==0)
+                            @if($user->approved==0)
                                 <button class="btn btn-warning btn-sm"> Not Approved</a>
                             @else
-                                <button class="btn btn-primary btn-sm" >Approved</button>
+                                <button class="btn btn-success btn-sm" >Approved</button>
                             @endif
                         </td>  
                         <td>
-                            <a href="{{ route('inspection.approved_by_siteman', $inspection->id) }}" class="btn btn-primary btn-sm"> Change Status</a>
+                            <button type='button' class='btn btn-primary btn-sm mb-1 pull-right' data-toggle='modal' data-target='#changeUserRoleModal'><i class="fa fa-pencil"></i> Change Role</button>
                         </td> 
                     </tr>
                     @empty
@@ -67,5 +61,5 @@
 
 @endsection
 @push('scripts')
-
+@include('modals.changeUserRoleModel')
 @endpush

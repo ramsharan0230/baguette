@@ -16,8 +16,7 @@
 <div class="col-md-12">
     <div class="card">
         <div class="card-header" style="background: #4CAFE0 !important; color:#fff">
-            <strong class="card-title">Data Table</strong>
-            <button type='button' class='btn btn-warning btn-sm mb-1 pull-right' data-toggle='modal' data-target='#addlocationModal'><i class="fa fa-plus"></i> Add New</button>
+            <strong class="card-title">Inspections</strong>
         </div>
         <div class="card-body">
             <table id="bootstrap-data-table" class="table table-striped table-bordered">
@@ -31,6 +30,7 @@
                         <th>Proposed Corrective Action</th>
                         <th>Accoutibility</th>
                         <th>Closing Date</th>
+                        <th>Status</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -46,12 +46,15 @@
                         <td>{{ $inspection->accountibility }} </td>
                         <td>{{ $inspection->closing_date }} </td>
                         <td>
-                            @if($inspection->sitemanager->inspection)
-                                <button class="btn btn-primary btn-sm approveSiteManBtn" >Approve</button>
+                            @if($inspection->approvedBy_siteman==0)
+                                <button class="btn btn-warning btn-sm"> Not Approved</a>
                             @else
-                                <button class="btn btn-primary btn-sm approveSiteManBtn" >Approved</button>
+                                <button class="btn btn-primary btn-sm" >Approved</button>
                             @endif
-                        </td>   
+                        </td>  
+                        <td>
+                            <a href="{{ route('inspection.approved_by_siteman', $inspection->id) }}" class="btn btn-primary btn-sm"> Change Status</a>
+                        </td> 
                     </tr>
                     @empty
                         <tr><td colspan="9">No Data Found</td></tr>
@@ -65,25 +68,4 @@
 @endsection
 @push('scripts')
 
-<script src="text/javascript">
-$(document).ready(function () {
-    $(".approveSiteManBtn").click(function(e){
-        e.preventDefault();
-        var id = $(this).data("id")
-        debugger
-        $.ajax({
-            url: 'inspection/'+id+'/approve',
-            type: "POST",
-            data: {
-                "_token": "{{ csrf_token() }}",
-                id: id,
-            },
-            dataType: 'json',
-        success: function (data) {
-            alert(data.message)
-            location.reload();
-        }
-    });
-});
-</script>
 @endpush

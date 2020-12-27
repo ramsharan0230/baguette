@@ -21,23 +21,23 @@ class SrOpManager
             return redirect()->route('login');
         }
 
-        if (Auth::user()->role->name == "hygiene") {
+        if (Auth::user()->role->slug == "hygiene") {
             return redirect()->route('hygiene');
         }
 
-        if (Auth::user()->role->name == "user") {
-            return redirect()->route('user');
+        if (Auth::user()->role->slug == "user") {
+            return redirect()->route('home');
         }
 
-        if (Auth::user()->role->name == "sitemanager") {
+        if (Auth::user()->role->slug == "sitemanager") {
             return redirect()->route('sitemanager');
         }
 
-        if (Auth::user()->role->name == "OpManager") {
+        if (Auth::user()->role->slug == "OpManager") {
             return redirect()->route('opmanager');
         }
 
-        if (Auth::user()->role->name == "SrOpManager") {
+        if (Auth::user()->role->slug == "SrOpManager") {
             return $next($request);
         }
     }

@@ -21,16 +21,24 @@ class Hygiene
             return redirect()->route('login');
         }
 
-        if (Auth::user()->role->name == "hygiene") {
-            return $next($request);
+        if (Auth::user()->role->slug == "user") {
+            return redirect()->route('home');
         }
 
-        if (Auth::user()->role->name == "user") {
-            return redirect()->route('user');
+        if (Auth::user()->role->slug == "SrOpManager") {
+            return redirect()->route('sropmanager');
         }
 
-        if (Auth::user()->role->name == 2) {
+        if (Auth::user()->role->slug == "OpManager") {
+            return redirect()->route('opmanager');
+        }
+
+        if (Auth::user()->role->slug == "sitemanager") {
             return redirect()->route('sitemanager');
+        }
+
+        if (Auth::user()->role->slug == "hygiene") {
+            return $next($request);
         }
     }
 }
