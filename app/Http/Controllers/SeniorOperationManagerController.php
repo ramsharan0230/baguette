@@ -19,4 +19,22 @@ class SeniorOperationManagerController extends Controller
         $roles = Role::latest()->get();
         return view('sropmanager.users', compact('users', 'roles'));
     }
+
+    public function changeRole(Request $request){
+        $request->validate([
+            'user_id' => 'required|integer',
+            'role_id' => 'required|integer',
+        ]);
+        
+        User::find($request->user_id)->update(['role_id'=>$request->role_id]);
+        return redirect()->route('sropmanager.users')->with(['success'=>"Role has been updated successfully!!"]);
+    }
+
+    public function changeStatus(Request $request, $id){
+        $user = User::findOrFail($id)->first();
+        dd($user);
+        User::find($user->id)->update(['approved'=>$user->approved==0?1:0]);
+
+        return response()->json(['message'=>"Role has been updated successfully!!", 'status'=>200]);
+    }
 }

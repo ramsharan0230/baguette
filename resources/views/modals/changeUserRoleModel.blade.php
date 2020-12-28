@@ -2,7 +2,7 @@
 <div class="modal fade" id="changeUserRoleModal" tabindex="-1" role="dialog" aria-labelledby="changeUserRoleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
-            <form action="{{ route('inspection.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('sropmanager.changeRole') }}" method="POST" >
                 {{ csrf_field() }}
                 <div class="modal-header">
                     <h5 class="modal-title" id="changeUserRoleModalLabel">
@@ -23,8 +23,9 @@
                     <div class="row">
                         <div class="col-sm-8">
                             <div class="form-group">
+                                <input type="text" id="userId" name="user_id">
                                 <label for="status">Select Role</label>
-                                <select name="status" id="status" class="form-control">
+                                <select name="role_id" id="editRoleId" class="form-control">
                                     <option value="">Select Role</option>
                                     @forelse ($roles as $role)
                                         <option value="{{ $role->id }}">{{ $role->name }}</option>

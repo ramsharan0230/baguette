@@ -40,14 +40,10 @@
                         <td>{{ $user->role->name }} </td>
                         <td><img src="{{ asset('images/avatar/1.jpg') }}" class="img-thumbnail" height="200px" height="200px" ></td>
                         <td>
-                            @if($user->approved==0)
-                                <button class="btn btn-warning btn-sm"> Not Approved</a>
-                            @else
-                                <button class="btn btn-success btn-sm" >Approved</button>
-                            @endif
+                            <button class="btnApprove btn btn-sm btn-{{ $user->approved ==0?'success':'primary' }}" data-user_id="{{ $user->id }}">{{ $user->approved ==0?" Not Approved":" Approved" }}  </a>
                         </td>  
                         <td>
-                            <button type='button' class='btn btn-primary btn-sm mb-1 pull-right' data-toggle='modal' data-target='#changeUserRoleModal'><i class="fa fa-pencil"></i> Change Role</button>
+                            <button type='button' class='btn btn-primary btn-sm mb-1 pull-right changeRole' data-toggle='modal' data-user_id="{{ $user->id }}" data-role_id="{{ $user->role->id }}" data-target='#changeUserRoleModal'><i class="fa fa-pencil"></i> Change Role</button>
                         </td> 
                     </tr>
                     @empty
@@ -58,8 +54,59 @@
         </div>
     </div>
 </div>  
+@include('modals.changeUserRoleModel')
 
 @endsection
 @push('scripts')
-@include('modals.changeUserRoleModel')
+<script>
+    $('.changeRole').click(function() {
+        var id = $('#editRoleId').val($(this).data("role_id"));
+        var user_id = $('#userId').val($(this).data("user_id"));
+    });
+
+    $(document).ready(function(){
+        $.ajaxSetup({
+            headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+        });
+        $(".btnApprove").click(function(e){
+            e.preventDefault()
+            var user_id = $(this).data("user_id");
+            $.ajax({
+                url: 'user/'+user_id+'/changeStatus',
+                type: "POST",
+                data: {
+                    user_id: user_id,
+                    "_token": "{{ csrf_token() }}",
+                },
+                dataType: 'json',
+                success: function (data) {
+                    if(data.status==200)
+                        window.location.reload(true);
+                }
+            })
+        });
+    });
+
+    // $('.chageStatus').click(function(e) {
+    //     e.preventDefault()
+    //     var user_id = $(this).data("user_id");
+    //     debugger
+    //     $.ajax({
+    //         url: 'sropmanager/user/'+user_id+'/changeStatus',
+    //         type: "POST",
+    //         data: {
+    //             user_id: user_id,
+    //         },
+    //         dataType: 'json',
+    //         success: function (data) {
+    //             debugger
+    //             // $('#companydata').trigger("reset");
+    //             // $('#practice_modal').modal('hide');
+    //             // window.location.reload(true);
+    //         }
+    //     })
+    // });
+</script>
 @endpush

@@ -19,7 +19,7 @@
                         <li><i class="menu-icon fa fa-th"></i><a href="forms-advanced.html">Advanced Form</a></li>
                     </ul>
                 </li>
-                @if(Auth::user()->role->name == "SrOpManager")
+                @if(Auth::user()->role->slug == "SrOpManager")
                 <li class="menu-item-has-children dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-th"></i>Users</a>
                     <ul class="sub-menu children dropdown-menu">

@@ -47,5 +47,7 @@ Route::group(['middleware'=>'OpManager'], function(){
 Route::group(['middleware'=>'SrOpManager'], function(){
     Route::get('sropmanager', 'SeniorOperationManagerController@index')->name('sropmanager');
     Route::get('sropmanager/users', 'SeniorOperationManagerController@users')->name('sropmanager.users');
+    Route::post('sropmanager/changeRole', 'SeniorOperationManagerController@changeRole')->name('sropmanager.changeRole');
+    Route::post('sropmanager/user/{id}/changeStatus', 'SeniorOperationManagerController@changeStatus')->name('sropmanager.user.changeStatus');
 });
 
