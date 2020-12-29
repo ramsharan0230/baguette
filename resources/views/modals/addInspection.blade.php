@@ -14,27 +14,23 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <ul>
-                            @foreach($errors->all() as $error)
-                            <div class="alert alert-danger" role="alert">{{ $error }}</div>
-                            @endforeach
-                        </ul>  
-                    </div>
-                    <div class="row">
                         <div class="col-sm-8">
-                            <div class="form-group">
+                            <div class="form-group{{ $errors->has('location') ? ' has-error' : '' }}">
                                 <label for="location">Location</label>
                                 <input type="text" class="form-control" id="location" placeholder="Add Area/Location Building/Level..." name="location">
+                                <p class="text-danger">{{ $errors->first('location') }}</p>
                             </div>
         
-                            <div class="form-group">
+                            <div class="form-group{{ $errors->has('start_date') ? ' has-error' : '' }}">
                                 <label for="date">Date</label>
                                 <input class="form-control" type="date" name="start_date"  value="{{old('start_date')}}">
+                                <p class="text-danger">{{ $errors->first('start_date') }}</p>
                             </div>
         
-                            <div class="form-group">
+                            <div class="form-group{{ $errors->has('findings') ? ' has-error' : '' }}">
                                 <label for="findings">Findings</label>
                                 <textarea class="form-control" name="findings" id="findings" cols="30" rows="3" placeholder="Add Findings......"></textarea>
+                                <p class="text-danger">{{ $errors->first('findings') }}</p>
                             </div>
         
                             <div class="form-group">

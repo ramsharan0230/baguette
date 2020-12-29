@@ -18,7 +18,7 @@ class InspectionController extends Controller
 
     public function store(Request $request){
         $request->validate([
-            'picture' => 'min:200',
+            'picture' => 'required|min:200',
             'location' => 'required',
             'start_date' => 'required',
             'findings' => 'required|max:10000',
