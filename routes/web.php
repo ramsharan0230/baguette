@@ -44,10 +44,13 @@ Route::group(['middleware'=>'OpManager'], function(){
     Route::get('opmanager', 'OperationManagerController@index')->name('opmanager');
 });
 
-Route::group(['middleware'=>'SrOpManager'], function(){
-    Route::get('sropmanager', 'SeniorOperationManagerController@index')->name('sropmanager');
-    Route::get('sropmanager/users', 'SeniorOperationManagerController@users')->name('sropmanager.users');
-    Route::post('sropmanager/changeRole', 'SeniorOperationManagerController@changeRole')->name('sropmanager.changeRole');
-    Route::post('sropmanager/user/{id}/changeStatus', 'SeniorOperationManagerController@changeStatus')->name('sropmanager.user.changeStatus');
+Route::group(['middleware'=>'SrOpManager', 'prefix'=>'sropmanager'], function(){
+    Route::get('/', 'SeniorOperationManagerController@index')->name('sropmanager');
+    Route::get('users', 'SeniorOperationManagerController@users')->name('sropmanager.users');
+    Route::post('changeRole', 'SeniorOperationManagerController@changeRole')->name('sropmanager.changeRole');
+    Route::get('user/{id}/changeStatus', 'SeniorOperationManagerController@changeStatus')->name('sropmanager.user.changeStatus');
+    Route::get('user/{id}/suspend', 'SeniorOperationManagerController@suspendUser')->name('sropmanager.user.suspend');
+    Route::get('user/{id}/unsuspend', 'SeniorOperationManagerController@unSuspendUser')->name('sropmanager.user.unsuspend');
+    
 });
 

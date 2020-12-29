@@ -42,7 +42,7 @@
                         <td>{{ $inspection->location }} <button data-id="{{ $inspection->id }}" data-location="{{ $inspection->location }}" class="btn btn-default btn-sm editLocation" style="border-radius: 50%" data-toggle='modal' data-target='#editLocationModal'><i class="fa fa-pencil"></i></button></td>
                         <td>{{ $inspection->start_date }} <button data-id="{{ $inspection->id }}" data-start_date="{{ $inspection->start_date }}" class="btn btn-default btn-sm editDate" style="border-radius: 50%" data-toggle='modal' data-target='#editDateModal'><i class="fa fa-pencil"></i></button></td>
                         <td>{{ $inspection->findings }} <button data-id="{{ $inspection->id }}" data-findings="{{ $inspection->findings }}" class="btn btn-default btn-sm editFindings" style="border-radius: 50%" data-toggle='modal' data-target='#editFindingsModal'><i class="fa fa-pencil"></i></button></td>
-                        <td><img src="{{ asset('images/inspection_files').'/'.$inspection->picture }}" class="img-thumbnail" height="200px" height="200px" ></td>
+                        <td><img src="{{ asset('images/inspection_files').'/'.$inspection->picture }}" data-toggle='modal' data-picture="{{ $inspection->picture }}" data-target='#showImageModal' class="img-thumbnail showImage" height="200px" height="200px" ></td>
                         <td>{{ $inspection->pca }} <button data-id="{{ $inspection->id }}" data-pca="{{ $inspection->pca }}" class="btn btn-default btn-sm editPca" style="border-radius: 50%" data-toggle='modal' data-target='#editPcaModal'><i class="fa fa-pencil"></i></button></td>
                         <td>{{ $inspection->accountibility }} <button data-id="{{ $inspection->id }}" data-accountability="{{ $inspection->accountibility }}" class="btn btn-default btn-sm editAccountability" style="border-radius: 50%" data-toggle='modal' data-target='#editAccountabilityModal'><i class="fa fa-pencil"></i></button></td>
                         <td>
@@ -80,6 +80,7 @@
 @include('modals.editAccountability')
 @include('modals.editStatus')
 @include('modals.editClosingDate')
+@include('modals.showImageModal')
 
 @endsection
 @push('scripts')
@@ -126,6 +127,14 @@
         // }
     }); 
 });
+</script>
+<script type="text/javascript">
+    $('.showImage').click(function(){
+        var image = $(this).data('picture');
+        $('#showImageModal').html('<img src="' + $(this).data('picture') + '"/>')
+
+        // $('#showImageModal').modal('show');src="{{ asset('images/inspection_files').'/'.$inspection->picture }}"
+    })
 </script>
 <script src="{{ asset('assets/js/lib/data-table/datatables.min.js') }}"></script>
 <script src="{{ asset('assets/js/lib/data-table/dataTables.bootstrap.min.js') }}"></script>

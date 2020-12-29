@@ -8,6 +8,34 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
 {
+
+
+    public function authenticated()
+    {
+        if(auth()->user()->role('hygiene'))
+        {
+            return redirect('/hygiene');
+        } 
+
+        if(auth()->user()->role('sitemanager'))
+        {
+            return redirect('/sitemanager');
+        } 
+
+        if(auth()->user()->role('OpManager'))
+        {
+            return redirect('/opmanager');
+        } 
+
+        if(auth()->user()->role('sropmanager'))
+        {
+            return redirect('/sropmanager');
+        } 
+
+        return redirect('/home');
+    }
+
+
     /*
     |--------------------------------------------------------------------------
     | Login Controller

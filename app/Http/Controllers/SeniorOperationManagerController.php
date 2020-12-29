@@ -30,11 +30,22 @@ class SeniorOperationManagerController extends Controller
         return redirect()->route('sropmanager.users')->with(['success'=>"Role has been updated successfully!!"]);
     }
 
-    public function changeStatus(Request $request, $id){
-        $user = User::findOrFail($id)->first();
-        dd($user);
-        User::find($user->id)->update(['approved'=>$user->approved==0?1:0]);
+    public function changeStatus($id){
+        $id = (int) $id;
+        User::where('id', $id)->update(['approved'=>1]);
 
-        return response()->json(['message'=>"Role has been updated successfully!!", 'status'=>200]);
+        return redirect()->route('sropmanager.users')->with(['success'=>"User has been Approved successfully!!!"]);
+    }
+
+    public function suspendUser($id){
+        User::where('id', $id)->update(['suspended'=>'suspended']);
+
+        return redirect()->route('sropmanager.users')->with(['success'=>"User has been Suspended successfully!!!"]);
+    }
+
+    public function unSuspendUser($id){
+        User::where('id', $id)->update(['suspended'=>'unsuspend']);
+
+        return redirect()->route('sropmanager.users')->with(['success'=>"User has been UnSuspended successfully!!!"]);
     }
 }

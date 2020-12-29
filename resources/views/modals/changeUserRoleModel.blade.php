@@ -23,7 +23,7 @@
                     <div class="row">
                         <div class="col-sm-8">
                             <div class="form-group">
-                                <input type="text" id="userId" name="user_id">
+                                <input type="hidden" id="userId" name="user_id">
                                 <label for="status">Select Role</label>
                                 <select name="role_id" id="editRoleId" class="form-control">
                                     <option value="">Select Role</option>

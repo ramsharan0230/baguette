@@ -40,10 +40,21 @@
                         <td>{{ $user->role->name }} </td>
                         <td><img src="{{ asset('images/avatar/1.jpg') }}" class="img-thumbnail" height="200px" height="200px" ></td>
                         <td>
-                            <button class="btnApprove btn btn-sm btn-{{ $user->approved ==0?'success':'primary' }}" data-user_id="{{ $user->id }}">{{ $user->approved ==0?" Not Approved":" Approved" }}  </a>
+                            <a href="{{ route('sropmanager.user.changeStatus', $user->id) }}" class="btn btn-sm btn-{{ $user->approved ==0?'success':'primary' }}" >{{ $user->approved ==0?" Not Approved":" Approved" }}  </a>
+                            @if($user->suspended =='suspended')
+                                <button class="btn btn-danger btn-sm">Suspended</button>
+                            @elseif($user->suspended =='unsuspend')
+                                <button class="btn btn-warning btn-sm">UnSuspended</button>
+                            @endif
                         </td>  
                         <td>
                             <button type='button' class='btn btn-primary btn-sm mb-1 pull-right changeRole' data-toggle='modal' data-user_id="{{ $user->id }}" data-role_id="{{ $user->role->id }}" data-target='#changeUserRoleModal'><i class="fa fa-pencil"></i> Change Role</button>
+                            @if($user->suspended =='normal' || $user->suspended =='unsuspend')
+                            <a href="{{ route('sropmanager.user.suspend', $user->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-times"></i> Suspend</a>
+                            @elseif($user->suspended =='suspended')
+                            <a href="{{ route('sropmanager.user.unsuspend', $user->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-times"></i> UnSuspend</a>
+                            @endif
+                        
                         </td> 
                     </tr>
                     @empty
@@ -75,12 +86,7 @@
             var user_id = $(this).data("user_id");
             $.ajax({
                 url: 'user/'+user_id+'/changeStatus',
-                type: "POST",
-                data: {
-                    user_id: user_id,
-                    "_token": "{{ csrf_token() }}",
-                },
-                dataType: 'json',
+                type: "GET",
                 success: function (data) {
                     if(data.status==200)
                         window.location.reload(true);
