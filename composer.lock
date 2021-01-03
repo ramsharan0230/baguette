@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3b9ac733c7d540f628b7fffbcc649f50",
+    "content-hash": "f269406fd1e437d9fdb9a1f9d7f08175",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1371,6 +1371,50 @@
                 }
             ],
             "time": "2020-10-18T11:50:25+00:00"
+        },
+        {
+            "name": "milantarami/nepali-calendar",
+            "version": "v1.2.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/milantarami/nepali-calendar.git",
+                "reference": "22b3c33a8316425385ddaa053dcc4c8b2fe8fa4b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/milantarami/nepali-calendar/zipball/22b3c33a8316425385ddaa053dcc4c8b2fe8fa4b",
+                "reference": "22b3c33a8316425385ddaa053dcc4c8b2fe8fa4b",
+                "shasum": ""
+            },
+            "require-dev": {
+                "orchestra/testbench": "^4.0",
+                "phpunit/phpunit": "^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "MilanTarami\\NepaliCalendar\\NepaliCalendarServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "MilanTarami\\NepaliCalendar\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "milantarami",
+                    "email": "milantarami.dev@gmail.com"
+                }
+            ],
+            "description": "ok",
+            "time": "2020-03-03T16:40:45+00:00"
         },
         {
             "name": "monolog/monolog",
