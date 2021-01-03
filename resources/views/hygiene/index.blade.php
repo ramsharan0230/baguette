@@ -1,6 +1,7 @@
 @extends('layouts.master')
 @section('title','Hygiene  | Dashboard')
 @push('stylesheets')
+<<<<<<< HEAD
 <link rel="stylesheet" href="{{ asset('assets/css/cs-skin-elastic.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/css/lib/datatable/dataTables.bootstrap.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/css/bootstrap-datetimepicker.min.css') }}">
@@ -11,6 +12,12 @@
         max-width: 80% !important;
     }
 </style>
+=======
+<link rel="stylesheet" href="assets/css/cs-skin-elastic.css">
+<link rel="stylesheet" href="{{ asset('assets/css/bootstrap-datetimepicker.min.css') }}">
+<link rel="stylesheet" href="assets/css/lib/datatable/dataTables.bootstrap.min.css">
+<link rel="stylesheet" href="assets/css/style.css">
+>>>>>>> 302001233e6401179493a224d29e27d0f1603f36
 @endpush
 @section('content')
 <div class="col-md-12">
@@ -38,6 +45,7 @@
                 <tbody>
                     @forelse ($inspections as $key=>$inspection)
                     <tr>
+<<<<<<< HEAD
                         <td>{{ $key+1 }}</td>
                         <td>{{ $inspection->location }} <button data-id="{{ $inspection->id }}" data-location="{{ $inspection->location }}" class="btn btn-default btn-sm editLocation" style="border-radius: 50%" data-toggle='modal' data-target='#editLocationModal'><i class="fa fa-pencil"></i></button></td>
                         <td>{{ $inspection->start_date }} <button data-id="{{ $inspection->id }}" data-start_date="{{ $inspection->start_date }}" class="btn btn-default btn-sm editDate" style="border-radius: 50%" data-toggle='modal' data-target='#editDateModal'><i class="fa fa-pencil"></i></button></td>
@@ -62,6 +70,17 @@
                                 <button class="btn btn-danger btn-sm btn-sm">Delete</button>      
                             @endif    
                         </td>
+=======
+                        <td>1</td>
+                        <td>Tiger Nixon</td>
+                        <td>System Architect</td>
+                        <td>Edinburgh</td>
+                        <td>$320,800</td>
+                        <td>dfgsdfgsdg</td>
+                        <td>Edinburgh</td>
+                        <td>$320,800</td>
+                        <td>01/01/2021 <button class="btn btn-primary btn-sm" style="float: right;" onclick="addNewRow()"> <i class="fa fa-plus"></i></button></td>
+>>>>>>> 302001233e6401179493a224d29e27d0f1603f36
                     </tr>
                     @empty
                         <tr><td colspan="10">No Data Found</td></tr>
@@ -72,6 +91,7 @@
     </div>
 </div>  
 {{-- add Location  --}}
+<<<<<<< HEAD
 @include('modals.addInspection')
 @include('modals.editLocation')
 @include('modals.editDate')
@@ -81,6 +101,33 @@
 @include('modals.editStatus')
 @include('modals.editClosingDate')
 @include('modals.showImageModal')
+=======
+<div class="modal fade" id="addlocationModal" tabindex="-1" role="dialog" aria-labelledby="addlocationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <form action="">
+                <div class="modal-header" style="background: #4CAFE0 !important; color:#fff">
+                    <h5 class="modal-title" id="addlocationModalLabel">Add Inpections</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="location">Location</label>
+                        <input type="text" class="form-control" id="location" placeholder="Add Area/Location Building/Level..." name="location">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="location">Date</label>
+                        <input type="text" class="form-control" id="date" placeholder="Add Date..." name="date">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="location">Findings</label>
+                        <textarea class="form-control" name="pca" id="findings" cols="30" rows="3" placeholder="Add Findings......"></textarea>
+                    </div>
+>>>>>>> 302001233e6401179493a224d29e27d0f1603f36
 
 @endsection
 @push('scripts')
@@ -133,6 +180,7 @@
         var image = $(this).data('picture');
         $('#showImageModal').html('<img src="' + $(this).data('picture') + '"/>')
 
+<<<<<<< HEAD
         // $('#showImageModal').modal('show');src="{{ asset('images/inspection_files').'/'.$inspection->picture }}"
     })
 </script>
@@ -167,6 +215,73 @@
     });
     Webcam.attach( '#my_camera' );
 </script>
+=======
+{{-- Closing date model --}}
+<div class="modal fade" id="closingDateModal" tabindex="-1" role="dialog" aria-labelledby="closingDateModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="closingDateModalLabel">Closing Date</h5> 
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group" >
+                    <label for="Select date">Select Closing Date</label>
+                    <input class="form-control" type="date" name="date"  value="{{old('date')}}">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary btn-sm">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- Status --}}
+<div class="modal fade" id="selectStatusModel" tabindex="-1" role="dialog" aria-labelledby="selectStatusModelLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="selectStatusModelLabel">Select Status</h5> 
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group" >
+                    <label for="Select date">Select Status</label>
+                    <select name="status" id="status" class="form-control">
+                        <option value="">Select Status</option>
+                        <option value="1">Open</option>
+                        <option value="0">Close/option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary btn-sm">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+@push('scripts')
+<script src="assets/js/lib/data-table/datatables.min.js"></script>
+<script src="assets/js/lib/data-table/dataTables.bootstrap.min.js"></script>
+<script src="assets/js/lib/data-table/dataTables.buttons.min.js"></script>
+<script src="assets/js/lib/data-table/buttons.bootstrap.min.js"></script>
+<script src="assets/js/lib/data-table/jszip.min.js"></script>
+<script src="assets/js/lib/data-table/vfs_fonts.js"></script>
+<script src="assets/js/lib/data-table/buttons.html5.min.js"></script>
+<script src="assets/js/lib/data-table/buttons.print.min.js"></script>
+<script src="assets/js/lib/data-table/buttons.colVis.min.js"></script>
+<script src="assets/js/init/datatables-init.js"></script>
+<script type="text/javascript" src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.min.js"> </script>
+<script type="text/javascript" src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.pt-BR.js"></script>
+>>>>>>> 302001233e6401179493a224d29e27d0f1603f36
 
 <script type="text/javascript"> 
     function addNewRow(){
@@ -180,8 +295,8 @@
                     "2011/04/25",
                     "2011/04/25",
                     "2011/04/25",
-                    "2011/04/25",
-                    "<button type='button' class='btn btn-success btn-sm mb-1' data-toggle='modal' data-target='#addlocationModal'>Add</button>"
+                    "Open <button type='button' class='btn btn-primary btn-sm mb-1' data-toggle='modal' data-target='#selectStatusModel'>  <i class='fa fa-pencil'></i></button>",
+                    "20/01/2021 <button type='button' class='btn btn-primary btn-sm mb-1' data-toggle='modal' data-target='#closingDateModal'>  <i class='fa fa-calendar-o'></i></button>"
             ]).draw();
     }
     
