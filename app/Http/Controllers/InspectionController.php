@@ -40,7 +40,7 @@ class InspectionController extends Controller
         $data['picture'] = $imageName;
         Inspection::create($data);
 
-        return redirect()->route('inspection.index');
+        return redirect()->route('inspection.index')->with('success', 'Inspection has been added Successfully');;
     }
 
     public function editLocation(Request $request){
