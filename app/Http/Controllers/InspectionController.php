@@ -22,8 +22,8 @@ class InspectionController extends Controller
             'location' => 'required',
             'start_date' => 'required',
             'findings' => 'required|max:10000',
-            'pca' => 'max:10000',
-            'accountibility' => 'max:299',
+            'pca' => 'required|max:10000',
+            'accountibility' => 'required|max:299',
             'status' => 'required',
             'closing_date' => 'max:50'
         ]);
@@ -39,6 +39,8 @@ class InspectionController extends Controller
         $data['user_id'] = Auth::user()->id;
         $data['picture'] = $imageName;
         Inspection::create($data);
+
+        return redirect()->route('inspection.index');
     }
 
     public function editLocation(Request $request){
