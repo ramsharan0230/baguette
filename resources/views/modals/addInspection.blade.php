@@ -33,34 +33,39 @@
                                 <p class="text-danger">{{ $errors->first('findings') }}</p>
                             </div>
         
-                            <div class="form-group">
+                            <div class="form-group{{ $errors->has('picture') ? ' has-error' : '' }}">
                                 <label for="picture">Picture</label>
                                 <input type="button" value="Take Snapshot" onClick="take_snapshot()" class="form-control">
                                 <input type="hidden" id="picture" name="picture" class="form-control">
+                                <p class="text-danger">{{ $errors->first('picture') }}</p>
                             </div>
         
-                            <div class="form-group">
+                            <div class="form-group{{ $errors->has('pca') ? ' has-error' : '' }}">
                                 <label for="pca">Propose Corrective Action</label>
                                 <textarea class="form-control" name="pca" id="pca" cols="30" rows="3" placeholder="Add Propose Corrective Action..."></textarea>
+                                <p class="text-danger">{{ $errors->first('pca') }}</p>
                             </div>
         
-                            <div class="form-group">
+                            <div class="form-group{{ $errors->has('accountibility') ? ' has-error' : '' }}">
                                 <label for="accountibility">Accountibility</label>
                                 <input type="text" name="accountibility" id="accountibility" placeholder="Add Accountibility..." class="form-control">
+                                <p class="text-danger">{{ $errors->first('accountibility') }}</p>
                             </div>
         
-                            <div class="form-group">
+                            <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
                                 <label for="status">Status</label>
                                 <select name="status" id="status" class="form-control">
                                     <option value="">Select Status</option>
                                     <option value="1">Open</option>
                                     <option value="0">Close</option>
                                 </select>
+                                <p class="text-danger">{{ $errors->first('status') }}</p>
                             </div>
         
-                            <div class="form-group">
+                            <div class="form-group{{ $errors->has('closing_date') ? ' has-error' : '' }}">
                                 <label for="closing_date">Closing Date</label>
                                 <input class="form-control" type="date" name="closing_date" placeholder="Add Closing date...">
+                                <p class="text-danger">{{ $errors->first('closing_date') }}</p>
                             </div>
                         </div>
                         <div class="col-sm-4">
