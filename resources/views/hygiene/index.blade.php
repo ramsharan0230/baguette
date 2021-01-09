@@ -1,10 +1,6 @@
 @extends('layouts.master')
 @section('title','Hygiene  | Dashboard')
 @push('stylesheets')
-<link rel="stylesheet" href="{{ asset('assets/css/cs-skin-elastic.css') }}">
-<link rel="stylesheet" href="{{ asset('assets/css/lib/datatable/dataTables.bootstrap.min.css') }}">
-<link rel="stylesheet" href="{{ asset('assets/css/bootstrap-datetimepicker.min.css') }}">
-<link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 <style>
     #results { float:right; margin:20px; padding:20px; border:1px solid; background:#ccc; }
     .modal-lg {
@@ -18,7 +14,8 @@
     <div class="card">
         <div class="card-header" style="background: #4CAFE0 !important; color:#fff">
             <strong class="card-title">Inspections</strong>
-            <button type='button' class='btn btn-warning btn-sm mb-1 pull-right' data-toggle='modal' data-target='#addlocationModal'><i class="fa fa-plus"></i> Add New</button>
+            <button type='button' class='btn btn-warning btn-sm pull-right' data-toggle='modal' data-target='#addlocationModal'><i class="fa fa-plus"></i> Add New</button>
+            <strong class="card-title pull-right mr-4"> {{ Auth::user()->name }} ({{ Auth::user()->role->name }}) </strong>
         </div>
         <div class="card-body">
             <table id="bootstrap-data-table" class="table table-striped table-bordered">
@@ -40,21 +37,21 @@
                     @forelse ($inspections as $key=>$inspection)
                     <tr>
                         <td>{{ $key+1 }}</td>
-                        <td>{{ $inspection->location }} <button data-id="{{ $inspection->id }}" data-location="{{ $inspection->location }}" class="btn btn-default btn-sm editLocation" style="border-radius: 50%" data-toggle='modal' data-target='#editLocationModal'><i class="fa fa-pencil"></i></button></td>
-                        <td>{{ $inspection->start_date }} <button data-id="{{ $inspection->id }}" data-start_date="{{ $inspection->start_date }}" class="btn btn-default btn-sm editDate" style="border-radius: 50%" data-toggle='modal' data-target='#editDateModal'><i class="fa fa-pencil"></i></button></td>
-                        <td>{{ $inspection->findings }} <button data-id="{{ $inspection->id }}" data-findings="{{ $inspection->findings }}" class="btn btn-default btn-sm editFindings" style="border-radius: 50%" data-toggle='modal' data-target='#editFindingsModal'><i class="fa fa-pencil"></i></button></td>
+                        <td>{{ $inspection->location }} @if($inspection->approvedBy_hygiene ==0)<button data-id="{{ $inspection->id }}" data-location="{{ $inspection->location }}" class="btn btn-default btn-sm editLocation" style="border-radius: 50%" data-toggle='modal' data-target='#editLocationModal'><i class="fa fa-pencil"></i></button>@endif</td>
+                        <td>{{ $inspection->start_date }} @if($inspection->approvedBy_hygiene ==0)<button data-id="{{ $inspection->id }}" data-start_date="{{ $inspection->start_date }}" class="btn btn-default btn-sm editDate" style="border-radius: 50%" data-toggle='modal' data-target='#editDateModal'><i class="fa fa-pencil"></i></button>@endif</td>
+                        <td>{{ $inspection->findings }} @if($inspection->approvedBy_hygiene ==0)<button data-id="{{ $inspection->id }}" data-findings="{{ $inspection->findings }}" class="btn btn-default btn-sm editFindings" style="border-radius: 50%" data-toggle='modal' data-target='#editFindingsModal'><i class="fa fa-pencil"></i></button>@endif</td>
                         <td><img src="{{ asset('images/inspection_files').'/'.$inspection->picture }}" data-toggle='modal' data-picture="{{ $inspection->picture }}" data-target='#showImageModal' class="img-thumbnail showImage" height="200px" height="200px" ></td>
-                        <td>{{ $inspection->pca }} <button data-id="{{ $inspection->id }}" data-pca="{{ $inspection->pca }}" class="btn btn-default btn-sm editPca" style="border-radius: 50%" data-toggle='modal' data-target='#editPcaModal'><i class="fa fa-pencil"></i></button></td>
-                        <td>{{ $inspection->accountibility }} <button data-id="{{ $inspection->id }}" data-accountability="{{ $inspection->accountibility }}" class="btn btn-default btn-sm editAccountability" style="border-radius: 50%" data-toggle='modal' data-target='#editAccountabilityModal'><i class="fa fa-pencil"></i></button></td>
+                        <td>{{ $inspection->pca }} @if($inspection->approvedBy_hygiene ==0)<button data-id="{{ $inspection->id }}" data-pca="{{ $inspection->pca }}" class="btn btn-default btn-sm editPca" style="border-radius: 50%" data-toggle='modal' data-target='#editPcaModal'><i class="fa fa-pencil"></i></button>@endif</td>
+                        <td>{{ $inspection->accountibility }} @if($inspection->approvedBy_hygiene ==0)<button data-id="{{ $inspection->id }}" data-accountability="{{ $inspection->accountibility }}" class="btn btn-default btn-sm editAccountability" style="border-radius: 50%" data-toggle='modal' data-target='#editAccountabilityModal'><i class="fa fa-pencil"></i></button>@endif</td>
                         <td>
                             @if($inspection->status==1)
                                 <button class="btn btn-sm btn-success">Open</button>
                             @else
                                 <button class="btn btn-sm btn-primary">Close</button>
                             @endif
-                            <button data-id="{{ $inspection->id }}" data-status="{{ $inspection->status }}" class="btn btn-default btn-sm editStatus" style="border-radius: 50%" data-toggle='modal' data-target='#editStatusModal'><i class="fa fa-pencil"></i></button>
+                            @if($inspection->approvedBy_hygiene ==0)<button data-id="{{ $inspection->id }}" data-status="{{ $inspection->status }}" class="btn btn-default btn-sm editStatus" style="border-radius: 50%" data-toggle='modal' data-target='#editStatusModal'><i class="fa fa-pencil"></i></button>@endif
                         </td>
-                        <td>{{ $inspection->closing_date }} <button data-id="{{ $inspection->id }}" data-closing_date="{{ $inspection->closing_date }}" class="btn btn-default btn-sm editClosingDate" style="border-radius: 50%" data-toggle='modal' data-target='#editClosingDateModal'><i class="fa fa-pencil"></i></button></td>
+                        <td>{{ $inspection->closing_date }} @if($inspection->approvedBy_hygiene ==0) <button data-id="{{ $inspection->id }}" data-closing_date="{{ $inspection->closing_date }}" class="btn btn-default btn-sm editClosingDate" style="border-radius: 50%" data-toggle='modal' data-target='#editClosingDateModal'><i class="fa fa-pencil"></i></button>@endif   </td>
                         <td>
                             @if($inspection->approvedBy_hygiene==1)
                                 <button class="btn btn-default disabled btn-sm">Submitted</button>                       
@@ -86,18 +83,6 @@
 @endsection
 
 @push('scripts')
-<script src="assets/js/lib/data-table/datatables.min.js"></script>
-<script src="assets/js/lib/data-table/dataTables.bootstrap.min.js"></script>
-<script src="assets/js/lib/data-table/dataTables.buttons.min.js"></script>
-<script src="assets/js/lib/data-table/buttons.bootstrap.min.js"></script>
-<script src="assets/js/lib/data-table/jszip.min.js"></script>
-<script src="assets/js/lib/data-table/vfs_fonts.js"></script>
-<script src="assets/js/lib/data-table/buttons.html5.min.js"></script>
-<script src="assets/js/lib/data-table/buttons.print.min.js"></script>
-<script src="assets/js/lib/data-table/buttons.colVis.min.js"></script>
-<script src="assets/js/init/datatables-init.js"></script>
-<script type="text/javascript" src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.min.js"> </script>
-<script type="text/javascript" src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.pt-BR.js"></script>
 
 <script type="text/javascript" src="{{ asset('assets/js/webcam.js') }}"></script>
 <script src="{{ asset('assets/js/jquery.base64.min.js') }}"></script>

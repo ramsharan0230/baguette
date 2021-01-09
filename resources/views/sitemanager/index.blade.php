@@ -1,10 +1,6 @@
 @extends('layouts.master')
-@section('title','Hygiene  | Dashboard')
+@section('title','Site Manager  | Dashboard')
 @push('stylesheets')
-<link rel="stylesheet" href="{{ asset('assets/css/cs-skin-elastic.css') }}">
-<link rel="stylesheet" href="{{ asset('assets/css/lib/datatable/dataTables.bootstrap.min.css') }}">
-<link rel="stylesheet" href="{{ asset('assets/css/bootstrap-datetimepicker.min.css') }}">
-<link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 <style>
     #results { float:right; margin:20px; padding:20px; border:1px solid; background:#ccc; }
     .modal-lg {
@@ -17,6 +13,7 @@
     <div class="card">
         <div class="card-header" style="background: #4CAFE0 !important; color:#fff">
             <strong class="card-title">Inspections</strong>
+            <strong class="card-title pull-right"><i class="fa fa-user"></i> {{ Auth::user()->name }} ({{ Auth::user()->role->name }}) </strong>
         </div>
         <div class="card-body">
             <table id="bootstrap-data-table" class="table table-striped table-bordered">
@@ -37,7 +34,7 @@
                 <tbody>
                     @forelse ($inspections as $key=>$inspection)
                     <tr>
-                        <td>{{ $key+1 }}</td>
+                        <td>{{ $key+1 }} <br> @if($inspection->approvedBy_siteman==1)<i style="color:green" class="fa fa-check" aria-hidden="true"></i>@else <i style="color:red" class="fa fa-times" aria-hidden="true"></i> @endif</td>
                         <td>{{ $inspection->location }} </td>
                         <td>{{ $inspection->start_date }} </td>
                         <td>{{ $inspection->findings }} </td>
@@ -53,7 +50,11 @@
                             @endif
                         </td>  
                         <td>
-                            <a href="{{ route('inspection.approved_by_siteman', $inspection->id) }}" class="btn btn-primary btn-sm"> Change Status</a>
+                            @if($inspection->approvedBy_siteman ==0)
+                            <a href="{{ route('inspection.approved_by_siteman', $inspection->id) }}" class="btn btn-sm btn-success"> Approve</button>
+                            @else
+                            <button data-id="{{ $inspection->id }}" class="btn btn-sm btn-danger unApprove" data-toggle='modal' data-target='#unapproveSitemanModal'> Unapprove</button>
+                            @endif
                         </td> 
                     </tr>
                     @empty
@@ -64,8 +65,40 @@
         </div>
     </div>
 </div>  
-
+@include('modals.unapproveSitemanModal')
 @endsection
 @push('scripts')
-
+<script src="https://code.jquery.com/jquery-3.5.1.js"
+  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+  crossorigin="anonymous">
+</script>
+<script>
+    $('.unApprove').click(function(){
+        var id = $(this).data("id")
+        $('#editId').val(id);
+    })
+    
+</script>
+<script>
+    $('#editLocationSubmit').on('click', function (event) {
+        event.preventDefault()
+        var id = $("#editId").val();
+        var location = $("#editLocation").val();
+    
+        $.ajax({
+        url: 'hygiene/edit/'+id+'/location',
+        type: "POST",
+        data: {
+            id: id,
+            location: location,
+        },
+        dataType: 'json',
+        success: function (data) {
+            debugger
+            // $('#companydata').trigger("reset");
+            // $('#practice_modal').modal('hide');
+            // window.location.reload(true);
+        }
+    });
+</script>
 @endpush

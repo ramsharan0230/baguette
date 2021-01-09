@@ -29,11 +29,19 @@
                     <div class="d-flex">
                         <div class="top-right links">
                             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                @auth
                                 <li class="nav-item">
-                                    @auth
                                     <a class="nav-link" href="{{ url('/home') }}">Home</a>
-                                    @endauth
                                 </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="#" onclick="event.preventDefault();document.getElementById('logout-form').submit();"> Logout </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                             {{ csrf_field() }}
+                                     </form>
+                                </li>
+                                @endauth
+
                                 @guest
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('login') }}">Login</a>

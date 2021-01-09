@@ -15,4 +15,8 @@ class Inspection extends Model
     public function sitemanager(){
         return $this->belongsTo('App\Models\SiteManager');
     }
+
+    public function remarks(){
+        return $this->hanMany(Remark::class);
+    }
 }

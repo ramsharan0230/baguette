@@ -48,4 +48,26 @@ class SeniorOperationManagerController extends Controller
 
         return redirect()->route('sropmanager.users')->with(['success'=>"User has been UnSuspended successfully!!!"]);
     }
+
+
+
+    public function approvedBySrOpMan($id){
+        Inspection::find($id)->update(['approvedBy_opman'=>1]);
+        $message = "Approved Successfully";
+
+        return redirect()->route("opmanager")->with('success', $message);
+    }
+
+    public function unApprovedBySrOpMan(Request $request){
+        $insUnapproved = Inspection::find($request->editId)->update(['approvedBy_opman'=>0]);
+        if($insUnapproved){
+            $remark = new Remark();
+            $remark->inspection_id = $request->editId;
+            $remark->remarks = $request->problem;
+            $remark->user_id = Auth::id();
+            $remark->save();
+        }
+        
+        return redirect()->route("opmanager")->with('error', "Unapproved Successfully!");
+    }
 }
