@@ -26,7 +26,6 @@
                         <th>Name</th>
                         <th>Email</th>
                         <th>Role</th>
-                        <th>Picture</th>
                         <th>Status</th>
                         <th>Actions</th>
                     </tr>
@@ -38,7 +37,6 @@
                         <td>{{ $user->name }} </td>
                         <td>{{ $user->email }} </td>
                         <td>{{ $user->role->name }} </td>
-                        <td><img src="{{ asset('images/avatar/1.jpg') }}" class="img-thumbnail" height="200px" height="200px" ></td>
                         <td>
                             <a href="{{ route('sropmanager.user.changeStatus', $user->id) }}" class="btn btn-sm btn-{{ $user->approved ==0?'success':'primary' }}" >{{ $user->approved ==0?" Not Approved":" Approved" }}  </a>
                             @if($user->suspended =='suspended')
