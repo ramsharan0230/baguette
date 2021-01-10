@@ -13,7 +13,7 @@
     <div class="card">
         <div class="card-header" style="background: #4CAFE0 !important; color:#fff">
             <strong class="card-title">Inspections</strong>
-            <strong class="card-title pull-right"><i class="fa fa-user"></i> {{ Auth::user()->name }} ({{ Auth::user()->role->name }}) </strong>
+            <strong class="card-title pull-right"> {{ Auth::user()->name }} ({{ Auth::user()->role->name }}) </strong>
         </div>
         <div class="card-body">
             <table id="bootstrap-data-table" class="table table-striped table-bordered">
