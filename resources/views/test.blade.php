@@ -1,155 +1,52 @@
-<!doctype html>
-
-<head>
-    <style>
-    /* CSS comes here */
-    #video {
-        border: 1px solid black;
-        width: 320px;
-        height: 240px;
-    }
-
-    #photo {
-        border: 1px solid black;
-        width: 320px;
-        height: 240px;
-    }
-
-    #canvas {
-        display: none;
-    }
-
-    .camera {
-        width: 340px;
-        display: inline-block;
-    }
-
-    .output {
-        width: 340px;
-        display: inline-block;
-    }
-
-    #startbutton {
-        display: block;
-        position: relative;
-        margin-left: auto;
-        margin-right: auto;
-        bottom: 36px;
-        padding: 5px;
-        background-color: #6a67ce;
-        border: 1px solid rgba(255, 255, 255, 0.7);
-        font-size: 14px;
-        color: rgba(255, 255, 255, 1.0);
-        cursor: pointer;
-    }
-
-    .contentarea {
-        font-size: 16px;
-        font-family: Arial;
-        text-align: center;
-    }
-    </style>
-    <title>My Favorite Sport</title>
-</head>
-
-<body>
-    <div class="contentarea">
-        <h1>
-            Using Javascript to capture Photo
-        </h1>
-        <div class="camera">
-            <video id="video">Video stream not available.</video>
-        </div>
-        <div><button id="startbutton">Take photo</button></div>
-        <canvas id="canvas"></canvas>
-        <div class="output">
-            <img id="photo" alt="The screen capture will appear in this box.">
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=yes, initial-scale=1, maximum-scale=1"
+    />
+    <meta
+      name="description"
+      content="Smart Device Camera Template for HTML, CSS, JS and WebRTC"
+    />
+    <meta name="keywords" content="HTML,CSS,JavaScript, WebRTC, Camera" />
+    <meta name="author" content="Kasper Kamperman" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>Mobile First Camera Template</title>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/cam/style.css') }}" />
+  </head>
+  <body>
+    <div id="container">
+        <div class="form">
+            {{ csrf_token() }}
+            <div id="vid_container">
+                <video id="video" autoplay playsinline></video>
+                <div id="video_overlay"></div>
+              </div>
+              <div id="gui_controls">
+                <button
+                  id="switchCameraButton"
+                  name="switch Camera"
+                  type="button"
+                  aria-pressed="false"
+                >d</button>
+                <button id="takePhotoButton" name="take Photo" type="button">ddd</button>
+                <button
+                  id="toggleFullScreenButton"
+                  name="toggle FullScreen"
+                  type="button"
+                  aria-pressed="false"
+                >s</button>
+              </div>
         </div>
     </div>
-
-    <script>
-    /* JS comes here */
-    (function() {
-
-        var width = 320; // We will scale the photo width to this
-        var height = 0; // This will be computed based on the input stream
-
-        var streaming = false;
-
-        var video = null;
-        var canvas = null;
-        var photo = null;
-        var startbutton = null;
-
-        function startup() {
-            video = document.getElementById('video');
-            canvas = document.getElementById('canvas');
-            photo = document.getElementById('photo');
-            startbutton = document.getElementById('startbutton');
-
-            navigator.mediaDevices.getUserMedia({
-                    video: true,
-                    audio: false
-                })
-                .then(function(stream) {
-                    video.srcObject = stream;
-                    video.play();
-                })
-                .catch(function(err) {
-                    console.log("An error occurred: " + err);
-                });
-
-            video.addEventListener('canplay', function(ev) {
-                if (!streaming) {
-                    height = video.videoHeight / (video.videoWidth / width);
-
-                    if (isNaN(height)) {
-                        height = width / (4 / 3);
-                    }
-
-                    video.setAttribute('width', width);
-                    video.setAttribute('height', height);
-                    canvas.setAttribute('width', width);
-                    canvas.setAttribute('height', height);
-                    streaming = true;
-                }
-            }, false);
-
-            startbutton.addEventListener('click', function(ev) {
-                takepicture();
-                ev.preventDefault();
-            }, false);
-
-            clearphoto();
-        }
-
-
-        function clearphoto() {
-            var context = canvas.getContext('2d');
-            context.fillStyle = "#AAA";
-            context.fillRect(0, 0, canvas.width, canvas.height);
-
-            var data = canvas.toDataURL('image/png');
-            photo.setAttribute('src', data);
-        }
-
-        function takepicture() {
-            var context = canvas.getContext('2d');
-            if (width && height) {
-                canvas.width = width;
-                canvas.height = height;
-                context.drawImage(video, 0, 0, width, height);
-
-                var data = canvas.toDataURL('image/png');
-                photo.setAttribute('src', data);
-            } else {
-                clearphoto();
-            }
-        }
-
-        window.addEventListener('load', startup, false);
-    })();
-    </script>
-</body>
-
+    <script
+  src="https://code.jquery.com/jquery-3.5.1.js"
+  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+  crossorigin="anonymous"></script>
+    <script src="{{ asset('js/cam/adapter.min.js') }}"></script>
+    <script src="{{ asset('js/cam/screenfull.min.js') }}"></script>
+    <script src="{{ asset('js/cam/howler.core.min.js') }}"></script>
+    <script src="{{ asset('js/cam/main.js') }}"></script>
+  </body>
 </html>
