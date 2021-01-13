@@ -19,6 +19,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('/test', 'FrontTestController@info')->name('test');
+
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware'=>'hygiene', 'prefix'=>'hygiene'], function(){

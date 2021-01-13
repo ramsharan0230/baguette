@@ -1,136 +1,155 @@
-@push('scripts')
-<script>
-    @if (count($errors) > 0)
-        $('#addlocationModal').modal('show');
-    @endif
-</script>
-<script>
-    $(".approveBtn").click(function(e){
-        e.preventDefault();
-        var id = $(this).data("id")
+<!doctype html>
 
-        $.ajax({
-            url: 'inspection/'+id+'/approve',
-            type: "POST",
-            data: {
-                "_token": "{{ csrf_token() }}",
-                id: id,
-            },
-            dataType: 'json',
-        success: function (data) {
-            alert(data.message)
-            location.reload();
+<head>
+    <style>
+    /* CSS comes here */
+    #video {
+        border: 1px solid black;
+        width: 320px;
+        height: 240px;
+    }
+
+    #photo {
+        border: 1px solid black;
+        width: 320px;
+        height: 240px;
+    }
+
+    #canvas {
+        display: none;
+    }
+
+    .camera {
+        width: 340px;
+        display: inline-block;
+    }
+
+    .output {
+        width: 340px;
+        display: inline-block;
+    }
+
+    #startbutton {
+        display: block;
+        position: relative;
+        margin-left: auto;
+        margin-right: auto;
+        bottom: 36px;
+        padding: 5px;
+        background-color: #6a67ce;
+        border: 1px solid rgba(255, 255, 255, 0.7);
+        font-size: 14px;
+        color: rgba(255, 255, 255, 1.0);
+        cursor: pointer;
+    }
+
+    .contentarea {
+        font-size: 16px;
+        font-family: Arial;
+        text-align: center;
+    }
+    </style>
+    <title>My Favorite Sport</title>
+</head>
+
+<body>
+    <div class="contentarea">
+        <h1>
+            Using Javascript to capture Photo
+        </h1>
+        <div class="camera">
+            <video id="video">Video stream not available.</video>
+        </div>
+        <div><button id="startbutton">Take photo</button></div>
+        <canvas id="canvas"></canvas>
+        <div class="output">
+            <img id="photo" alt="The screen capture will appear in this box.">
+        </div>
+    </div>
+
+    <script>
+    /* JS comes here */
+    (function() {
+
+        var width = 320; // We will scale the photo width to this
+        var height = 0; // This will be computed based on the input stream
+
+        var streaming = false;
+
+        var video = null;
+        var canvas = null;
+        var photo = null;
+        var startbutton = null;
+
+        function startup() {
+            video = document.getElementById('video');
+            canvas = document.getElementById('canvas');
+            photo = document.getElementById('photo');
+            startbutton = document.getElementById('startbutton');
+
+            navigator.mediaDevices.getUserMedia({
+                    video: true,
+                    audio: false
+                })
+                .then(function(stream) {
+                    video.srcObject = stream;
+                    video.play();
+                })
+                .catch(function(err) {
+                    console.log("An error occurred: " + err);
+                });
+
+            video.addEventListener('canplay', function(ev) {
+                if (!streaming) {
+                    height = video.videoHeight / (video.videoWidth / width);
+
+                    if (isNaN(height)) {
+                        height = width / (4 / 3);
+                    }
+
+                    video.setAttribute('width', width);
+                    video.setAttribute('height', height);
+                    canvas.setAttribute('width', width);
+                    canvas.setAttribute('height', height);
+                    streaming = true;
+                }
+            }, false);
+
+            startbutton.addEventListener('click', function(ev) {
+                takepicture();
+                ev.preventDefault();
+            }, false);
+
+            clearphoto();
         }
-    }); 
 
-    $(".assignBtn").click(function(e){
-        debugger
-        // e.preventDefault();
-        // var id = $(this).data("id")
 
-        // $.ajax({
-        //     url: 'inspection/'+id+'/assign',
-        //     type: "POST",
-        //     data: {
-        //         "_token": "{{ csrf_token() }}",
-        //         id: id,
-        //     },
-        //     dataType: 'json',
-        // success: function (data) {
-        //     alert(data.message)
-        //     location.reload();
-        // }
-    }); 
-});
-</script>
-<script type="text/javascript">
-    $('.showImage').click(function(){
-        var image = $(this).data('picture');
-        $('#showImageModal').html('<img src="' + $(this).data('picture') + '"/>')
+        function clearphoto() {
+            var context = canvas.getContext('2d');
+            context.fillStyle = "#AAA";
+            context.fillRect(0, 0, canvas.width, canvas.height);
 
-        // $('#showImageModal').modal('show');src="{{ asset('images/inspection_files').'/'.$inspection->picture }}"
-    })
-</script>
-<script src="{{ asset('assets/js/lib/data-table/datatables.min.js') }}"></script>
-<script src="{{ asset('assets/js/lib/data-table/dataTables.bootstrap.min.js') }}"></script>
-<script src="{{ asset('assets/js/lib/data-table/dataTables.buttons.min.js') }}"></script>
-<script src="{{ asset('assets/js/lib/data-table/buttons.bootstrap.min.js') }}"></script>
-<script src="{{ asset('assets/js/lib/data-table/jszip.min.js') }}"></script>
-<script src="{{ asset('assets/js/lib/data-table/vfs_fonts.js') }}"></script>
-<script src="{{ asset('assets/js/lib/data-table/buttons.html5.min.js') }}"></script>
-<script src="{{ asset('assets/js/lib/data-table/buttons.print.min.js') }}"></script>
-<script src="{{ asset('assets/js/lib/data-table/buttons.colVis.min.js') }}"></script>
-<script src="{{ asset('assets/js/init/datatables-init.js') }}"></script>
-<script type="text/javascript" src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.min.js"> </script>
-<script type="text/javascript" src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.pt-BR.js"></script>
-<script type="text/javascript" src="{{ asset('assets/js/webcam.js') }}"></script>
-<script src="{{ asset('assets/js/jquery.base64.min.js') }}"></script>
+            var data = canvas.toDataURL('image/png');
+            photo.setAttribute('src', data);
+        }
 
-<script src="text/javascript">
-    $(function () {
-        $('#datetimepicker1').datetimepicker({
-            dateFormat: "dd-mm-yy", 
-        });
-    });
-</script>
-<script language="JavaScript">
-    Webcam.set({
-        width: 500,
-        height: 300,
-        image_format: 'jpeg',
-        jpeg_quality: 500
-    });
-    Webcam.attach( '#my_camera' );
-</script>
-{{-- Closing date model --}}
-<div class="modal fade" id="closingDateModal" tabindex="-1" role="dialog" aria-labelledby="closingDateModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="closingDateModalLabel">Closing Date</h5> 
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group" >
-                    <label for="Select date">Select Closing Date</label>
-                    <input class="form-control" type="date" name="date"  value="{{old('date')}}">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary btn-sm">Save</button>
-            </div>
-        </div>
-    </div>
-</div>
+        function takepicture() {
+            var context = canvas.getContext('2d');
+            if (width && height) {
+                canvas.width = width;
+                canvas.height = height;
+                context.drawImage(video, 0, 0, width, height);
 
-{{-- Status --}}
-<div class="modal fade" id="selectStatusModel" tabindex="-1" role="dialog" aria-labelledby="selectStatusModelLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="selectStatusModelLabel">Select Status</h5> 
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group" >
-                    <label for="Select date">Select Status</label>
-                    <select name="status" id="status" class="form-control">
-                        <option value="">Select Status</option>
-                        <option value="1">Open</option>
-                        <option value="0">Close/option>
-                    </select>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary btn-sm">Save</button>
-            </div>
-        </div>
-    </div>
-</div>
-@endsection
+                var data = canvas.toDataURL('image/png');
+                photo.setAttribute('src', data);
+            } else {
+                clearphoto();
+            }
+        }
+
+        window.addEventListener('load', startup, false);
+    })();
+    </script>
+</body>
+
+</html>
