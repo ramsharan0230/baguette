@@ -3,6 +3,13 @@
 @section('content')
 <div class="container-fluid">
     <div class="row">
+        @if (Session::has('message'))
+            <div class="alert alert-success">
+                <ul>
+                    <li>{{ Session::get('message') }}</li>
+                </ul>
+            </div>
+        @endif
         <div class="col-md-6">
         </div>
         <div class="col-sm-12 col-md-6 col-lg-6">
@@ -17,7 +24,12 @@
                             <h4>{{ $signedInUser->name }}</h4>
                             <p class="text-secondary mb-1"><span>Role: </span>{{ $signedInUser->role->name }}</p>
                             <p class="text-muted font-size-sm"><span>Email: </span>{{ $signedInUser->email }}</p>
-                            <button class="btn btn-secondary">{{ $signedInUser->approved==0?"Not Approved":"Approved" }}</button>
+                            @if($signedInUser->suspended=='suspended')
+                                <button class="btn btn-danger">Suspended</button>
+                            @elseif($signedInUser->approved=='0')
+                                <button class="btn btn-warning">Not Approved</button>
+                            @endif
+                            
                         </div>
                     </div>
                 </div>

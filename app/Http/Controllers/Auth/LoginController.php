@@ -12,6 +12,13 @@ class LoginController extends Controller
 
     public function authenticated()
     {
+        if(auth()->user()->approved==0 && auth()->user()->suspended == 'suspended'){
+            if(auth()->user()->approved==0)
+                return redirect('/home')->with('message', 'You are not Approved!');
+            else
+                return redirect('/home')->with('message', 'Sorry, You are Suspended!');
+        }
+        
         if(auth()->user()->role('hygiene'))
         {
             return redirect('/hygiene');

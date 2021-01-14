@@ -30,13 +30,13 @@
                   type="button"
                   aria-pressed="false"
                 >d</button>
-                <button id="takePhotoButton" name="take Photo" type="button">ddd</button>
+                <button id="takePhotoButton" name="take Photo" type="button">Front</button>
                 <button
                   id="toggleFullScreenButton"
                   name="toggle FullScreen"
                   type="button"
                   aria-pressed="false"
-                >s</button>
+                >back</button>
               </div>
         </div>
     </div>
