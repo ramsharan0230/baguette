@@ -38,6 +38,7 @@ Route::group(['middleware'=>'hygiene', 'prefix'=>'hygiene'], function(){
     Route::post('inspection/{id}/assign', 'InspectionController@assignInspection')->name('inspection.assign');
     Route::get('inspection/take-picture/{id}', 'InspectionController@takeImage')->name('inspection.take-picture');
     Route::post('inspection/take-cam', 'InspectionController@postTakenImage')->name('inspection.take-cam');
+    Route::get('inspection/{id}/delete', 'InspectionController@deleteIns')->name('inspection.delete');
 });
 
 Route::group(['middleware'=>'sitemanager'], function(){

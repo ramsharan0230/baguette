@@ -19,4 +19,8 @@ class Inspection extends Model
     public function remarks(){
         return $this->hanMany(Remark::class);
     }
+
+    public function pictures(){
+        return $this->hasMany(Picture::class);
+    }
 }

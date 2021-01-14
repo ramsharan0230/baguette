@@ -7,6 +7,8 @@ use Illuminate\Support\Str;
 use File;
 use Carbon\Carbon;
 use App\Models\Inspection;
+use App\Models\Picture;
+use App\Models\Remark;
 use Auth;
 
 class InspectionController extends Controller
@@ -27,15 +29,6 @@ class InspectionController extends Controller
             'closing_date' => 'max:50'
         ]);
         $data = $request->all();
-
-        // if($request->picture){
-        //     $image = $request->picture; 
-        //     $image = str_replace('data:image/jpeg;base64,', '', $image);
-        //     $image = str_replace(' ', '+', $image);
-        //     $imageName = Str::random(10).'.'.'jpeg';
-        //     \File::put(public_path('images/inspection_files'). '/' . $imageName, base64_decode($image));
-        // }
-        // $data['picture'] = $imageName;
 
         $data['user_id'] = Auth::user()->id;
         Inspection::create($data);
@@ -152,8 +145,20 @@ class InspectionController extends Controller
         $data['picture'] = $imageName;
         $id = $request->id;
 
-        $updateStatus = Inspection::find($id)->update(['picture'=>$imageName]);
-        if($updateStatus)
+        $picture = new Picture();
+        $picture->name = $imageName;
+        $picture->inspection_id = $id;
+        $picture->save();
+
+        if($picture)
             return response()->json(['message' => 'Successfully updated Picture', 'status' => 200]);
+    }
+
+    public function deleteIns($id){
+        $remark = Remark::where('inspection_id', $id)->delete();
+        $picture = Picture::where('inspection_id', $id)->delete();
+        $picture = Inspection::where('id', $id)->delete();
+
+        return redirect()->route("inspection.index")->with('error','Inspection has been deleted successfully!');
     }
 }

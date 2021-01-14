@@ -41,14 +41,32 @@
                         <td>{{ $inspection->start_date }} @if($inspection->approvedBy_hygiene ==0)<button data-id="{{ $inspection->id }}" data-start_date="{{ $inspection->start_date }}" class="btn btn-default btn-sm editDate" style="border-radius: 50%" data-toggle='modal' data-target='#editDateModal'><i class="fa fa-pencil"></i></button>@endif</td>
                         <td>{{ $inspection->findings }} @if($inspection->approvedBy_hygiene ==0)<button data-id="{{ $inspection->id }}" data-findings="{{ $inspection->findings }}" class="btn btn-default btn-sm editFindings" style="border-radius: 50%" data-toggle='modal' data-target='#editFindingsModal'><i class="fa fa-pencil"></i></button>@endif</td>
                         <td>
-                            @if(!empty($inspection->picture))
-                                <img style="cursor:pointer" src="{{ asset('images/inspection_files').'/'.$inspection->picture }}" data-toggle='modal' data-id="{{ $inspection->id }}" 
-                                    data-picture="{{ $inspection->picture }}" data-target='#showImageModal' onclick="fire(this)" height="50px" height="50px" >
-                            @else
-                            <a href="{{ route('inspection.take-picture', $inspection->id) }}" class="btn btn btn-outline-success btn-sm">
-                                <i class="fa fa-camera" aria-hidden="true"></i>
-                                 Take Picture</a>
-                            @endif
+                            <div class="row">
+                                @forelse ($inspection->pictures as $item)
+                                @if(count($inspection->pictures) < 2)
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <img style="cursor:pointer" src="{{ asset('images/inspection_files').'/'.$item->name }}" data-toggle='modal' 
+                                        data-picture="{{ $item->name }}" data-target='#showImageModal' onclick="fire(this)" class="img-thumbnail">
+                                </div>
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <a href="{{ route('inspection.take-picture', $inspection->id) }}" class="btn btn btn-outline-success btn-sm">
+                                        <i class="fa fa-camera" aria-hidden="true"></i>
+                                        Take Picture</a>
+                                </div>
+                                @else
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <img style="cursor:pointer" src="{{ asset('images/inspection_files').'/'.$item->name }}" data-toggle='modal' 
+                                        data-picture="{{ $item->name }}" data-target='#showImageModal' onclick="fire(this)" class="img-thumbnail">
+                                </div>
+                                @endif
+                                @empty
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <a href="{{ route('inspection.take-picture', $inspection->id) }}" class="btn btn btn-outline-success btn-sm">
+                                        <i class="fa fa-camera" aria-hidden="true"></i>
+                                        Take Picture</a>
+                                </div>
+                                @endforelse
+                            </div>
                         </td>
                         <td>{{ $inspection->pca }} @if($inspection->approvedBy_hygiene ==0)<button data-id="{{ $inspection->id }}" data-pca="{{ $inspection->pca }}" class="btn btn-default btn-sm editPca" style="border-radius: 50%" data-toggle='modal' data-target='#editPcaModal'><i class="fa fa-pencil"></i></button>@endif</td>
                         <td>{{ $inspection->accountibility }} @if($inspection->approvedBy_hygiene ==0)<button data-id="{{ $inspection->id }}" data-accountability="{{ $inspection->accountibility }}" class="btn btn-default btn-sm editAccountability" style="border-radius: 50%" data-toggle='modal' data-target='#editAccountabilityModal'><i class="fa fa-pencil"></i></button>@endif</td>
@@ -63,10 +81,17 @@
                         <td>{{ $inspection->closing_date }} @if($inspection->approvedBy_hygiene ==0) <button data-id="{{ $inspection->id }}" data-closing_date="{{ $inspection->closing_date }}" class="btn btn-default btn-sm editClosingDate" style="border-radius: 50%" data-toggle='modal' data-target='#editClosingDateModal'><i class="fa fa-pencil"></i></button>@endif   </td>
                         <td>
                             @if($inspection->approvedBy_hygiene==1)
-                                <button class="btn btn-default disabled btn-sm">Submitted</button>                       
+                                <button class="btn btn-outline-success disabled btn-sm" title="Submitted"><i style="color:green" class="fa fa-check-circle" aria-hidden="true"></i> <span style="color:green"></span> Submitted</button>                       
                             @else
-                                <a href="{{ route('inspection.approve', $inspection->id) }}" class="btn btn-primary btn-sm" >Submit</a>
-                                <button class="btn btn-danger btn-sm btn-sm">Delete</button>      
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <a href="{{ route('inspection.approve', $inspection->id) }}" class="btn btn-primary btn-sm pull-left" title="Submit"><i class="fa fa-check" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <a href="{{ route('inspection.delete', $inspection->id) }}" class="btn btn-danger btn-sm btn-sm" title="Delete"><i class="fa fa-trash"></i></a>      
+                                </div>
+                            </div>
                             @endif    
                         </td>
                     </tr>

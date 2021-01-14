@@ -3,7 +3,9 @@
         <div id="main-menu" class="main-menu collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li class="active">
-                    <a href="index.html"><i class="menu-icon fa fa-laptop"></i>Hygiene Dashboard </a>
+                    @if(Auth::user()->role->slug=='hygiene')
+                    <a href="{{ route('inspection.index') }}"><i class="menu-icon fa fa-laptop"></i>Hygiene Dashboard </a>
+                    @endif
                 </li>
                 <li class="menu-item-has-children dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Reports</a>
