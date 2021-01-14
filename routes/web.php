@@ -36,6 +36,8 @@ Route::group(['middleware'=>'hygiene', 'prefix'=>'hygiene'], function(){
     Route::post('inspection/edit/closing', 'InspectionController@editClosingDate')->name('inspection.edit.closing');
     Route::get('inspection/{id}/approve', 'InspectionController@approveInspection')->name('inspection.approve');
     Route::post('inspection/{id}/assign', 'InspectionController@assignInspection')->name('inspection.assign');
+    Route::get('inspection/take-picture/{id}', 'InspectionController@takeImage')->name('inspection.take-picture');
+    Route::post('inspection/take-cam', 'InspectionController@postTakenImage')->name('inspection.take-cam');
 });
 
 Route::group(['middleware'=>'sitemanager'], function(){

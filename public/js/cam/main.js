@@ -14,7 +14,7 @@ var toggleFullScreenButton;
 var switchCameraButton;
 var amountOfCameras = 0;
 var currentFacingMode = 'environment';
-
+var inspection_id = $('#inspection_id').val();
 // this function counts the amount of video inputs
 // it replaces DetectRTC that was previously implemented.
 function deviceCount() {
@@ -257,25 +257,25 @@ function takeSnapshot() {
   // some API's (like Azure Custom Vision) need a blob with image data
   getCanvasBlob(canvas).then(function (blob) {
     // do something with the image blob
-    debugger
+    var redirectUrl = 'http://127.0.0.1:8000/hygiene/inspection'
     var reader = new FileReader();
     reader.readAsDataURL(blob); 
     reader.onloadend = function() {
      var base64data = reader.result; 
     //  new 
     $.ajax({
-      url: 'testy',
+      url: '/hygiene/inspection/take-cam',
       type: "POST",
       headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
       data: {
-        base64data: base64data,
+        picture: base64data,
+        id: inspection_id
       },
       dataType: 'json',
       success: function (data) {
-          debugger
-          // $('#companydata').trigger("reset");
-          // $('#practice_modal').modal('hide');
-          // window.location.reload(true);
+          if(data.status == 200){
+            window.location.href=redirectUrl;
+          }
         }
       });
     // new end

@@ -2,17 +2,22 @@
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="showImageModalLabel">
-                    <h4 class="card-title"><strong>Picture</strong></h4>
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <div class="row">
+                    <div class="col-sm-9">
+                        <h5 class="modal-title" id="showImageModalLabel">
+                            <h4 class="card-title"><strong>Picture</strong></h4>
+                        </h5>
+                    </div>
+                    <div class="col-sm-3">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-sm-12">
-                        <img id="showPicture" src="images/inspection_files/" height="500px" width="500px">
+                    <div class="col-sm-12" id="imageFileShow">
                     </div>
                 </div>
             </div>

@@ -10,7 +10,7 @@
 
 @endpush
 @section('content')
-<div class="col-md-12">
+<div class="col-sm-12 col-md-12 col-lg-12">
     <div class="card">
         <div class="card-header" style="background: #4CAFE0 !important; color:#fff">
             <strong class="card-title">Inspections</strong>
@@ -34,13 +34,22 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($inspections as $key=>$inspection)
+                     @forelse ($inspections as $key=>$inspection)
                     <tr>
                         <td>{{ $key+1 }}</td>
                         <td>{{ $inspection->location }} @if($inspection->approvedBy_hygiene ==0)<button data-id="{{ $inspection->id }}" data-location="{{ $inspection->location }}" class="btn btn-default btn-sm editLocation" style="border-radius: 50%" data-toggle='modal' data-target='#editLocationModal'><i class="fa fa-pencil"></i></button>@endif</td>
                         <td>{{ $inspection->start_date }} @if($inspection->approvedBy_hygiene ==0)<button data-id="{{ $inspection->id }}" data-start_date="{{ $inspection->start_date }}" class="btn btn-default btn-sm editDate" style="border-radius: 50%" data-toggle='modal' data-target='#editDateModal'><i class="fa fa-pencil"></i></button>@endif</td>
                         <td>{{ $inspection->findings }} @if($inspection->approvedBy_hygiene ==0)<button data-id="{{ $inspection->id }}" data-findings="{{ $inspection->findings }}" class="btn btn-default btn-sm editFindings" style="border-radius: 50%" data-toggle='modal' data-target='#editFindingsModal'><i class="fa fa-pencil"></i></button>@endif</td>
-                        <td><img src="{{ asset('images/inspection_files').'/'.$inspection->picture }}" data-toggle='modal' data-picture="{{ $inspection->picture }}" data-target='#showImageModal' class="img-thumbnail showImage" height="200px" height="200px" ></td>
+                        <td>
+                            @if(!empty($inspection->picture))
+                                <img style="cursor:pointer" src="{{ asset('images/inspection_files').'/'.$inspection->picture }}" data-toggle='modal' data-id="{{ $inspection->id }}" 
+                                    data-picture="{{ $inspection->picture }}" data-target='#showImageModal' onclick="fire(this)" height="50px" height="50px" >
+                            @else
+                            <a href="{{ route('inspection.take-picture', $inspection->id) }}" class="btn btn btn-outline-success btn-sm">
+                                <i class="fa fa-camera" aria-hidden="true"></i>
+                                 Take Picture</a>
+                            @endif
+                        </td>
                         <td>{{ $inspection->pca }} @if($inspection->approvedBy_hygiene ==0)<button data-id="{{ $inspection->id }}" data-pca="{{ $inspection->pca }}" class="btn btn-default btn-sm editPca" style="border-radius: 50%" data-toggle='modal' data-target='#editPcaModal'><i class="fa fa-pencil"></i></button>@endif</td>
                         <td>{{ $inspection->accountibility }} @if($inspection->approvedBy_hygiene ==0)<button data-id="{{ $inspection->id }}" data-accountability="{{ $inspection->accountibility }}" class="btn btn-default btn-sm editAccountability" style="border-radius: 50%" data-toggle='modal' data-target='#editAccountabilityModal'><i class="fa fa-pencil"></i></button>@endif</td>
                         <td>
@@ -84,8 +93,6 @@
 
 @push('scripts')
 
-<script type="text/javascript" src="{{ asset('assets/js/webcam.js') }}"></script>
-<script src="{{ asset('assets/js/jquery.base64.min.js') }}"></script>
 
 <script type="text/javascript"> 
     function addNewRow(){
@@ -102,12 +109,7 @@
                     "Open <button type='button' class='btn btn-primary btn-sm mb-1' data-toggle='modal' data-target='#selectStatusModel'>  <i class='fa fa-pencil'></i></button>",
                     "20/01/2021 <button type='button' class='btn btn-primary btn-sm mb-1' data-toggle='modal' data-target='#closingDateModal'>  <i class='fa fa-calendar-o'></i></button>"
             ]).draw();
-    }
-    
-    function onChange(){
-        debugger
-    }
-        
+    } 
 </script>
 <script>
     @if (count($errors) > 0)
@@ -116,6 +118,9 @@
 </script>
 
 <script>
+    function fire(data){
+        $('#imageFileShow').html(`<img class="img-thumbnail" src=`+data.src+`>`);
+    }
     $(".approveBtn").click(function(e){
         e.preventDefault();
         var id = $(this).data("id")
@@ -155,37 +160,6 @@
 });
 </script>
 
-<script type="text/javascript">
-    $('.showImage').click(function(){
-        var image = $(this).data('picture');
-        $('#showImageModal').html('<img src="' + $(this).data('picture') + '"/>')
-
-        // $('#showImageModal').modal('show');src="{{ asset('images/inspection_files').'/'.$inspection->picture }}"
-    })
-</script>
-
-<script language="JavaScript">
-    Webcam.set({
-        width: 500,
-        height: 300,
-        image_format: 'jpeg',
-        jpeg_quality: 500
-    });
-    Webcam.attach( '#my_camera' );
-</script>
-
-<script language="JavaScript">
-    function take_snapshot() {
-        // take snapshot and get image data
-        Webcam.snap( function(data_uri) {
-            // display results in page
-            $('#picture').val(data_uri)
-            document.getElementById('results').innerHTML = 
-                '<h2>Here is your image:</h2>' +
-                '<img src="'+data_uri+'"/>'; 
-        } );
-    }
-</script>
 <script type="text/javascript" src="{{ asset('assets/js/actions.js') }}"></script>
 <script
   src="https://code.jquery.com/jquery-3.5.1.js"
@@ -220,7 +194,7 @@ $(document).ready(function () {
             // window.location.reload(true);
         }
     });
-
+    
     $('#editDateSubmit').on('click', function (event) {
         event.preventDefault()
         var id = $("#editId").val();
@@ -240,6 +214,21 @@ $(document).ready(function () {
             // $('#practice_modal').modal('hide');
             // window.location.reload(true);
         }
+    });
+
+    $('.img-thumbnail').click(function (event) {
+        event.preventDefault()
+        debugger
+        var id = $(this).data("id")
+
+        $.ajax({
+            url: 'inspection/'+id+'/showImage',
+            type: "GET",
+            success: function (data) {
+                debugger
+                alert(data.message)
+                location.reload();
+            }
     });
 });
 </script>

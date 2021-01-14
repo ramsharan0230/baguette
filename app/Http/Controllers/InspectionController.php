@@ -18,7 +18,6 @@ class InspectionController extends Controller
 
     public function store(Request $request){
         $request->validate([
-            'picture' => 'required|min:200',
             'location' => 'required',
             'start_date' => 'required',
             'findings' => 'required|max:10000',
@@ -29,15 +28,16 @@ class InspectionController extends Controller
         ]);
         $data = $request->all();
 
-        if($request->picture){
-            $image = $request->picture; 
-            $image = str_replace('data:image/jpeg;base64,', '', $image);
-            $image = str_replace(' ', '+', $image);
-            $imageName = Str::random(10).'.'.'jpeg';
-            \File::put(public_path('images/inspection_files'). '/' . $imageName, base64_decode($image));
-        }
+        // if($request->picture){
+        //     $image = $request->picture; 
+        //     $image = str_replace('data:image/jpeg;base64,', '', $image);
+        //     $image = str_replace(' ', '+', $image);
+        //     $imageName = Str::random(10).'.'.'jpeg';
+        //     \File::put(public_path('images/inspection_files'). '/' . $imageName, base64_decode($image));
+        // }
+        // $data['picture'] = $imageName;
+
         $data['user_id'] = Auth::user()->id;
-        $data['picture'] = $imageName;
         Inspection::create($data);
 
         return redirect()->route('inspection.index')->with('success', 'Inspection has been added Successfully');;
@@ -125,10 +125,35 @@ class InspectionController extends Controller
     }
 
     public function assignInspection($id){
-        dd($id);
-        
         Inspection::find($id)->update(['approved'=>1]);
 
         return response()->json(['message' => 'Successfully Approved', 'state' => 200]);
+    }
+
+    public function takeImage($id){
+        // dd($id);
+        return view('hygiene.take-picture', compact('id'));
+    }
+
+    public function postTakenImage(Request $request){
+        $request->validate([
+            'picture' => 'required|min:1000',
+            'id' => 'required'
+        ]);
+        $data = $request->all();
+
+        if($request->picture){
+            $image = $request->picture; 
+            $image = str_replace('data:image/jpeg;base64,', '', $image);
+            $image = str_replace(' ', '+', $image);
+            $imageName = Str::random(10).'.'.'jpeg';
+            \File::put(public_path('images/inspection_files'). '/' . $imageName, base64_decode($image));
+        }
+        $data['picture'] = $imageName;
+        $id = $request->id;
+
+        $updateStatus = Inspection::find($id)->update(['picture'=>$imageName]);
+        if($updateStatus)
+            return response()->json(['message' => 'Successfully updated Picture', 'status' => 200]);
     }
 }

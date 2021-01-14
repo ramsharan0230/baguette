@@ -1,6 +1,6 @@
 
 <div class="modal fade" id="addlocationModal" tabindex="-1" role="dialog" aria-labelledby="addlocationModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <form action="{{ route('inspection.store') }}" method="POST" enctype="multipart/form-data">
                 {{ csrf_field() }}
@@ -14,7 +14,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-sm-8">
+                        <div class="col-sm-12">
                             <div class="form-group{{ $errors->has('location') ? ' has-error' : '' }}">
                                 <label for="location">Location</label>
                                 <input type="text" class="form-control" id="location" placeholder="Add Area/Location Building/Level..." name="location">
@@ -31,13 +31,6 @@
                                 <label for="findings">Findings</label>
                                 <textarea class="form-control" name="findings" id="findings" cols="30" rows="3" placeholder="Add Findings......"></textarea>
                                 <p class="text-danger">{{ $errors->first('findings') }}</p>
-                            </div>
-        
-                            <div class="form-group{{ $errors->has('picture') ? ' has-error' : '' }}">
-                                <label for="picture">Picture</label>
-                                <input type="button" value="Take Snapshot" onClick="take_snapshot()" class="form-control">
-                                <input type="hidden" id="picture" name="picture" class="form-control">
-                                <p class="text-danger">{{ $errors->first('picture') }}</p>
                             </div>
         
                             <div class="form-group{{ $errors->has('pca') ? ' has-error' : '' }}">
@@ -67,10 +60,6 @@
                                 <input class="form-control" type="date" name="closing_date" placeholder="Add Closing date...">
                                 <p class="text-danger">{{ $errors->first('closing_date') }}</p>
                             </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div id="results"></div>
-                            <div id="my_camera"></div>
                         </div>
                     </div>
                     
