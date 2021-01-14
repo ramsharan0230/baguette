@@ -4,30 +4,38 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('css/cam/style.css') }}" />
 @endpush
 @section('content')
-<div class="col-md-12">
+<div class="col-md-12 col-md-lg col-sm-lg">
     <div class="card">
         <div class="card-body">
             <form class="form" method="POST" action="{{ route('inspection.take-cam') }}">
                 <input type="hidden" name="inspection_id" value="{{ $id }}" id="inspection_id">
-                <div id="vid_container">
-                    <video id="video" autoplay playsinline></video>
-                    <div id="video_overlay"></div>
+                <div class="row">
+                  <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div id="vid_container">
+                      <video id="video" autoplay playsinline></video>
+                      <div id="video_overlay"></div>
+                    </div>
                   </div>
-                  <div id="gui_controls">
-                    <button
-                      id="switchCameraButton"
-                      name="switch Camera"
-                      type="button"
-                      aria-pressed="false"
-                    >d</button>
-                    <button id="takePhotoButton" name="take Photo" type="button">Capture</button>
-                    <button
-                      id="toggleFullScreenButton"
-                      name="toggle FullScreen"
-                      type="button"
-                      aria-pressed="false"
-                    >Flick</button>
+
+                  <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div id="gui_controls">
+                      <button
+                        id="switchCameraButton"
+                        name="switch Camera"
+                        type="button"
+                        aria-pressed="false"
+                      >d</button>
+                      <button id="takePhotoButton" name="take Photo" type="button">Capture</button>
+                      <button
+                        id="toggleFullScreenButton"
+                        name="toggle FullScreen"
+                        type="button"
+                        aria-pressed="false"
+                      >Flick</button>
+                    </div>
                   </div>
+
+                </div>
             </form>
         </div>
     </div>
