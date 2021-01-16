@@ -11,7 +11,7 @@ use Auth;
 class SiteManagerController extends Controller
 {
     public function index(){
-        $inspections = Inspection::where('approvedBy_hygiene', 1)->where('approvedBy_siteman', 1)
+        $inspections = Inspection::where('approvedBy_hygiene', 1)->where('approvedBy_siteman', 0)->orwhere('approvedBy_siteman', 1)
         ->where('approvedBy_sropman', 0)->latest()->get();
 
         return view('sitemanager.index', compact('inspections'));
@@ -38,5 +38,10 @@ class SiteManagerController extends Controller
         }
         
         return redirect()->route("sitemanager")->with('error', "Unapproved Successfully!");
+    }
+
+    public function review($id){
+        $remark = Remark::where('inspection_id', $id)->get();
+        return response()->json(['message' => 'Successfully Approved', 'data'=>$remark, 'state' => 200]);
     }
 }

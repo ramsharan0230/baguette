@@ -51,14 +51,16 @@
                         </td>  
                         <td>
                             @if($inspection->approvedBy_siteman ==0)
-                            <a href="{{ route('inspection.approved_by_siteman', $inspection->id) }}" class="btn btn-sm btn-success"> Approve</button>
+                            <a href="{{ route('inspection.approved_by_siteman', $inspection->id) }}" class="btn btn-sm btn-success"> Approve</button></a>
+                            <button data-id="{{ $inspection->id }}" class="btn btn-sm btn-danger unApprove" data-toggle='modal' data-target='#unapproveSitemanModal'> Unapprove</button>
                             @else
                             <button data-id="{{ $inspection->id }}" class="btn btn-sm btn-danger unApprove" data-toggle='modal' data-target='#unapproveSitemanModal'> Unapprove</button>
                             @endif
+                            <button data-id="{{ $inspection->id }}" class="btn btn-primary btn-sm review" data-toggle='modal' data-target='#showReviewModel'><i class="fa fa-eye"></i></button>
                         </td> 
                     </tr>
                     @empty
-                        <tr><td colspan="9">No Data Found</td></tr>
+                        <tr><td colspan="10">No Data Found</td></tr>
                     @endforelse
                 </tbody>
             </table>
@@ -66,12 +68,14 @@
     </div>
 </div>  
 @include('modals.unapproveSitemanModal')
+@include('modals.showReviewModel')
 @endsection
 @push('scripts')
 <script src="https://code.jquery.com/jquery-3.5.1.js"
   integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
   crossorigin="anonymous">
 </script>
+<script src="{{ asset('assets/js/reviewSiteman.js') }}"></script>
 <script>
     $('.unApprove').click(function(){
         var id = $(this).data("id")
@@ -95,10 +99,8 @@
         dataType: 'json',
         success: function (data) {
             debugger
-            // $('#companydata').trigger("reset");
-            // $('#practice_modal').modal('hide');
-            // window.location.reload(true);
         }
     });
+});
 </script>
 @endpush

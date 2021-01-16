@@ -39,12 +39,14 @@ Route::group(['middleware'=>'hygiene', 'prefix'=>'hygiene'], function(){
     Route::get('inspection/take-picture/{id}', 'InspectionController@takeImage')->name('inspection.take-picture');
     Route::post('inspection/take-cam', 'InspectionController@postTakenImage')->name('inspection.take-cam');
     Route::get('inspection/{id}/delete', 'InspectionController@deleteIns')->name('inspection.delete');
+    Route::get('inspection/{id}/review', 'InspectionController@review')->name('inspection.review');
 });
 
 Route::group(['middleware'=>'sitemanager'], function(){
     Route::get('sitemanager', 'SiteManagerController@index')->name('sitemanager');
     Route::get('inspection/{id}/approved_by_siteman', 'SiteManagerController@approvedBySiteMan')->name('inspection.approved_by_siteman');
     Route::post('inspection/unApproved_by_siteman', 'SiteManagerController@unApprovedBySiteMan')->name('inspection.unapproved_by_siteman');
+    Route::get('inspection/{id}/reviewSiteman', 'SiteManagerController@review')->name('inspection.reviewSiteman');
 });
 
 Route::group(['middleware'=>'OpManager'], function(){

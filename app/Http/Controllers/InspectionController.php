@@ -161,4 +161,9 @@ class InspectionController extends Controller
 
         return redirect()->route("inspection.index")->with('error','Inspection has been deleted successfully!');
     }
+
+    public function review($id){
+        $remark = Remark::where('inspection_id', $id)->get();
+        return response()->json(['message' => 'Successfully Approved', 'data'=>$remark, 'state' => 200]);
+    }
 }

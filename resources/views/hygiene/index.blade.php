@@ -84,15 +84,16 @@
                                 <button class="btn btn-outline-success disabled btn-sm" title="Submitted"><i style="color:green" class="fa fa-check-circle" aria-hidden="true"></i> <span style="color:green"></span> Submitted</button>                       
                             @else
                             <div class="row">
-                                <div class="col-sm-12 col-md-6 col-lg-6">
-                                    <a href="{{ route('inspection.approve', $inspection->id) }}" class="btn btn-primary btn-sm pull-left" title="Submit"><i class="fa fa-check" aria-hidden="true"></i>
+                                <div class="col-sm-6 col-md-6 col-lg-4">
+                                    <a href="{{ route('inspection.approve', $inspection->id) }}" class="btn btn-success btn-sm pull-left" title="Submit"><i class="fa fa-check" aria-hidden="true"></i>
                                     </a>
                                 </div>
-                                <div class="col-sm-12 col-md-6 col-lg-6">
-                                    <a href="{{ route('inspection.delete', $inspection->id) }}" class="btn btn-danger btn-sm btn-sm" title="Delete"><i class="fa fa-trash"></i></a>      
+                                <div class="col-sm-6 col-md-6 col-lg-4">
+                                    <a href="{{ route('inspection.delete', $inspection->id) }}" class="btn btn-danger btn-sm btn-sm pull-left" title="Delete"><i class="fa fa-trash"></i></a>      
                                 </div>
                             </div>
-                            @endif    
+                            @endif   
+                            <button data-id="{{ $inspection->id }}" data-closing_date="{{ $inspection->closing_date }}" class="col-sm-6 mt-2 btn btn-primary btn-sm review" data-toggle='modal' data-target='#showReviewModel'><i class="fa fa-eye"></i></button>
                         </td>
                     </tr>
                     @empty
@@ -113,6 +114,7 @@
 @include('modals.editStatus')
 @include('modals.editClosingDate')
 @include('modals.showImageModal')
+@include('modals.showReviewModel')
 
 @endsection
 
@@ -141,7 +143,7 @@
         $('#addlocationModal').modal('show');
     @endif
 </script>
-
+<script src="{{ asset('assets/js/review.js') }}"></script>
 <script>
     function fire(data){
         $('#imageFileShow').html(`<img class="img-thumbnail" src=`+data.src+`>`);
