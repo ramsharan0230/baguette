@@ -24,7 +24,7 @@
                         name="switch Camera"
                         type="button"
                         aria-pressed="false"
-                      >d</button>
+                      >Flick</button>
                       <button id="takePhotoButton" name="take Photo" type="button">Capture</button>
                       <button
                         id="toggleFullScreenButton"
