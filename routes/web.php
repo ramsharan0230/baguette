@@ -40,6 +40,11 @@ Route::group(['middleware'=>'hygiene', 'prefix'=>'hygiene'], function(){
     Route::post('inspection/take-cam', 'InspectionController@postTakenImage')->name('inspection.take-cam');
     Route::get('inspection/{id}/delete', 'InspectionController@deleteIns')->name('inspection.delete');
     Route::get('inspection/{id}/review', 'InspectionController@review')->name('inspection.review');
+
+    Route::get('inspection/pdf/report/submitted', 'HygieneController@submittedReport')->name('inspection.pdf.report.submitted');
+    Route::get('inspection/pdf/report/unsubmitted', 'HygieneController@unSubmittedReport')->name('inspection.pdf.report.unsubmitted');
+    Route::get('inspection/excel/report/submitted', 'HygieneController@submittedReportExcel')->name('inspection.excel.report.submitted');
+    Route::get('inspection/excel/report/unsubmitted', 'HygieneController@unSubmittedReportExcel')->name('inspection.excel.report.unsubmitted');
 });
 
 Route::group(['middleware'=>'sitemanager'], function(){

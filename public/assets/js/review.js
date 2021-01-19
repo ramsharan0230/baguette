@@ -6,12 +6,12 @@ $(".review").on('click',function(e){
         type: "GET",
         dataType: 'json',
         success: function (data) {
-            $(".inner").empty();
+            $(".text-light").empty();
             if(data.data.length>0){
                 for ( var i = 0; i < data.data.length; i++ ) {
                     var date = (data.data[i].created_at).split('-')
                     var day = date[2].substring(0, 2)
-                    $( "<div class=`alert alert-success` role=`alert`>"+data.data[i].remarks+" <small><i class=`fa fa-calender`></i>"+day+'/'+date[1]+'/'+date[0]+"</small></div>" ).appendTo( ".inner" );
+                    $( "<div class=`alert alert-success` role=`alert`>"+data.data[i].remarks+" <small><i class=`fa fa-calender`></i>"+day+'/'+date[1]+'/'+date[0]+"</small></div>" ).appendTo( ".text-light" );
                 }
             }
             else{

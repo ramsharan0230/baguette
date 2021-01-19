@@ -7,20 +7,16 @@
                     <a href="{{ route('inspection.index') }}"><i class="menu-icon fa fa-laptop"></i>Hygiene Dashboard </a>
                     @endif
                 </li>
-                <li class="menu-item-has-children dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Reports</a>
-                    <ul class="sub-menu children dropdown-menu">
-                        <li><i class="fa fa-table"></i><a href="tables-basic.html">Verified Reports</a></li>
-                        <li><i class="fa fa-table"></i><a href="tables-data.html">Row Reports</a></li>
+                <li class="menu-item-has-children dropdown show">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> <i class="menu-icon fa fa-bar-chart"></i>Reports</a>
+                    <ul class="sub-menu children dropdown-menu show">
+                        <li><i style="color:red" class="menu-icon fa fa-file-pdf-o"></i><a href="{{ route('inspection.pdf.report.submitted') }}">Submitted(pdf)</a></li>
+                        <li><i style="color:red" class="menu-icon fa fa-file-pdf-o"></i><a href="{{ route('inspection.pdf.report.unsubmitted') }}">Unsubmitted(pdf)</a></li>
+                        <li><i style="color:green" class="menu-icon fa fa-file-excel-o"></i><a href="{{ route('inspection.excel.report.submitted') }}">Submitted(excel)</a></li>
+                        <li><i style="color:green" class="menu-icon fa fa-file-excel-o"></i><a href="{{ route('inspection.excel.report.unsubmitted') }}">Unsubmitted(excel)</a></li>
                     </ul>
                 </li>
-                <li class="menu-item-has-children dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-th"></i>Forms</a>
-                    <ul class="sub-menu children dropdown-menu">
-                        <li><i class="menu-icon fa fa-th"></i><a href="forms-basic.html">Basic Form</a></li>
-                        <li><i class="menu-icon fa fa-th"></i><a href="forms-advanced.html">Advanced Form</a></li>
-                    </ul>
-                </li>
+
                 @if(Auth::user()->role->slug == "SrOpManager")
                 <li class="menu-item-has-children dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-th"></i>Users</a>

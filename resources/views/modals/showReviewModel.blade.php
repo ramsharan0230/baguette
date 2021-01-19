@@ -17,6 +17,18 @@
             </div>
             <div class="modal-body">
                 <div class="inner">
+                    <div class="card text-white bg-flat-color-1">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="card-left pt-1 float-left">
+                                    <p class="text-light mt-1 m-0 reviewText"></p>
+                                </div>
+                                <div class="card-right float-right text-right">
+                                    <p class="text-light mt-1 m-0 reviewDate"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
