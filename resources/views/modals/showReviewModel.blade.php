@@ -16,19 +16,13 @@
                 </div>
             </div>
             <div class="modal-body">
-                <div class="inner">
-                    <div class="card text-white bg-flat-color-1">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="card-left pt-1 float-left">
-                                    <p class="text-light mt-1 m-0 reviewText"></p>
-                                </div>
-                                <div class="card-right float-right text-right">
-                                    <p class="text-light mt-1 m-0 reviewDate"></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="row" id="review_text_all">
+                    <div class="col-sm-1" id="serial_num"></div>
+                    <div class="col-sm-8" id="review_text"></div>
+                    <div class="col-sm-3" id="review_date"></div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 " id="no_review_text"></div>
                 </div>
             </div>
             <div class="modal-footer">

@@ -2,20 +2,27 @@ $(".review").on('click',function(e){
     e.preventDefault();
     var id = $(this).data("id")
     $.ajax({
-        url: 'inspection/'+id+'/review',
+        url: 'hygiene/inspection/'+id+'/review',
         type: "GET",
         dataType: 'json',
         success: function (data) {
-            $(".text-light").empty();
+            $('#review_text').empty(); $('#review_date').empty(); $('#serial_num').empty();
             if(data.data.length>0){
+                $('#no_review_text').empty();
+                var p =0;
                 for ( var i = 0; i < data.data.length; i++ ) {
+                    p++
                     var date = (data.data[i].created_at).split('-')
                     var day = date[2].substring(0, 2)
-                    $( "<div class=`alert alert-success` role=`alert`>"+data.data[i].remarks+" <small><i class=`fa fa-calender`></i>"+day+'/'+date[1]+'/'+date[0]+"</small></div>" ).appendTo( ".text-light" );
+
+                    $( "<p>"+data.data[i].remarks+"</p>" ).appendTo( "#review_text" );
+                    $( "<p>"+day+'/'+date[1]+'/'+date[0]+"</p>" ).appendTo( "#review_date" );
+                    $( "<p>"+p+".</p>" ).appendTo( "#serial_num" );   
                 }
             }
             else{
-                $( "<div class=`alert alert-success` role=`alert`>No Remarks Found</div>" ).appendTo( ".inner" );
+                $('#no_review_text').empty();
+                $('<p style=`color:red`>No Remarks Found !!</p>').appendTo( "#no_review_text" );
             }
         }
     })

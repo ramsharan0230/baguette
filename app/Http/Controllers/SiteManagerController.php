@@ -27,17 +27,26 @@ class SiteManagerController extends Controller
     }
 
     public function unApprovedBySiteMan(Request $request){
-        $insUnapproved = Inspection::find($request->editId)->update(['approvedBy_siteman'=>0]);
-        // dd($insUnapproved);
+        $this->validate($request,[
+            'inspection_id'=>'required|numeric',
+            'problem'=>'required|min:2|max:1500'
+         ]);
+
+         $insUnapproved = Inspection::where('id', $request->inspection_id)->update(['approvedBy_hygiene'=>0]);
+
         if($insUnapproved){
             $remark = new Remark();
-            $remark->inspection_id = $request->editId;
+            $remark->inspection_id = $request->inspection_id;
             $remark->remarks = $request->problem;
             $remark->user_id = Auth::id();
             $remark->save();
+
+            $message = "Unapproved Successfully";
+        }else{
+            $message = "Sorry!, Something went wrong!";
         }
         
-        return redirect()->route("sitemanager")->with('error', "Unapproved Successfully!");
+        return redirect()->route("sitemanager")->with('message', $message);
     }
 
     public function review($id){

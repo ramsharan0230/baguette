@@ -12,10 +12,19 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    @if (count($errors) > 0)
+                        <div class = "alert alert-danger">
+                            <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <input type="hidden" class="form-control" id="editId" name="editId">
+                                <input type="hidden" class="form-control editId" id="editId" name="inspection_id">
                                 <label for="problem">Report Problem</label>
                                 <textarea class="form-control" name="problem" id="problem" rows="3" placeholder="Report Problem......"></textarea>
                             </div>

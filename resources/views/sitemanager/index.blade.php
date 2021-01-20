@@ -38,7 +38,16 @@
                         <td>{{ $inspection->location }} </td>
                         <td>{{ $inspection->start_date }} </td>
                         <td>{{ $inspection->findings }} </td>
-                        <td><img src="{{ asset('images/inspection_files').'/'.$inspection->picture }}" class="img-thumbnail" height="200px" height="200px" ></td>
+                        <td>
+                            <div class="row">
+                                @foreach($inspection->pictures as $item)
+                                    <div class="col-sm-12 col-md-6 col-lg-6">
+                                        <img style="cursor:pointer" src="{{ asset('images/inspection_files').'/'.$item->name }}" data-toggle='modal' 
+                                            data-picture="{{ $item->name }}" data-target='#showImageModal' onclick="fire(this)" class="img-thumbnail">
+                                    </div>
+                                @endforeach
+                            </div>
+                        </td>
                         <td>{{ $inspection->pca }} </td>
                         <td>{{ $inspection->accountibility }} </td>
                         <td>{{ $inspection->closing_date }} </td>
@@ -69,19 +78,19 @@
 </div>  
 @include('modals.unapproveSitemanModal')
 @include('modals.showReviewModel')
+@include('modals.showImageModal')
 @endsection
 @push('scripts')
-<script src="https://code.jquery.com/jquery-3.5.1.js"
-  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-  crossorigin="anonymous">
-</script>
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 <script src="{{ asset('assets/js/reviewSiteman.js') }}"></script>
 <script>
     $('.unApprove').click(function(){
         var id = $(this).data("id")
-        $('#editId').val(id);
+        var eidt = $('.editId').val(id);
     })
-    
+    function fire(data){
+        $('#imageFileShow').html(`<img class="img-thumbnail" src=`+data.src+`>`);
+    }
 </script>
 <script>
     $('#editLocationSubmit').on('click', function (event) {

@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Catering Services in Abu Dhabi UAE | @yield('title')</title>
+        <title>Aa24Inspect | Abu Dhabi | UAE | @yield('title')</title>
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
 
@@ -16,14 +16,14 @@
             @if (Route::has('login'))
             <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
-                  <a class="navbar-brand" href="#"><img src="{{ asset('images/logo6.png') }}" alt="" width="100px" height="50px"></a>
+                  <a class="navbar-brand" href="#"><img src="{{ asset('images/new_logo.png') }}" alt="" width="100px" height="50px"></a>
                   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                   </button>
                   <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                       <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Baguette UAE</a>
+                        <a class="nav-link active" aria-current="page" href="#">Aa24Inspect</a>
                       </li>
                     </ul>
                     <div class="d-flex">

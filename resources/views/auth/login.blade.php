@@ -6,7 +6,7 @@
         <div class="col-md-6 col-lg-6"></div>
         <div class="col-sm-12 col-md-6 col-lg-6">
             <div class="card" style="min-height: 300px">
-                <div class="card-header">{{ __('Baguette UAE Login') }}</div>
+                <div class="card-header" style="color:green">{{ __('Aa24Inspect Login') }}</div>
                     <div class="card-body">
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
