@@ -71,34 +71,32 @@
     </style>
 </head>
 <body>
-    <div class="container-main">
-        @include('includes.aside')
-        <!-- Left Panel -->
-        
-        <!-- /#left-panel -->
-        <!-- Right Panel -->
-        <div id="right-panel" class="right-panel">
-            <!-- Header-->
-            @include('includes.header')
-            <!-- /#header -->
-
-            <!-- Content -->
-            <div class="content">
-                @include('includes.flash-message')
-                <!-- Animated -->
-                @yield('content')
-                <!-- .animated -->
-            </div>
-
-            <!-- /.content -->
-            <div class="clearfix"></div>
-
-            <!-- Footer -->
-            {{-- @include('includes.footer') --}}
-            <!-- /.site-footer -->
+    
+    @include('includes.aside')
+    <!-- Left Panel -->
+    
+    <!-- /#left-panel -->
+    <!-- Right Panel -->
+    <div id="right-panel" class="right-panel">
+        <!-- Header-->
+        @include('includes.header')
+        <!-- /#header -->
+        <!-- Content -->
+        <div class="content">
+            @include('includes.flash-message')
+            <!-- Animated -->
+            @yield('content')
+            <!-- .animated -->
         </div>
-        <!-- /#right-panel -->
+
+        <!-- /.content -->
+        <div class="clearfix"></div>
+
+        <!-- Footer -->
+        {{-- @include('includes.footer') --}}
+        <!-- /.site-footer -->
     </div>
+        <!-- /#right-panel -->
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.5.1.js"
     integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="

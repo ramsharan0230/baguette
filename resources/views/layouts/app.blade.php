@@ -11,7 +11,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
         <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     </head>
-    <body style="background-color: #f2ece0">
+    <body id="main">
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
             <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
@@ -31,7 +31,17 @@
                             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                                 @auth
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('/home') }}">Home</a>
+                                  @if(Auth::user()->role->slug == 'hygiene') 
+                                  <a href="{{ route('hygiene') }}" class="nav-link">Home</a>
+                                  @elseif(Auth::user()->role->slug == 'sitemanager')
+                                  <a href="{{ route('sitemanager') }}" class="nav-link">Home</a>
+                                  @elseif(Auth::user()->role->slug == 'OpManager')
+                                  <a href="{{ route('opmanager') }}" class="nav-link">Home</a>
+                                  @elseif(Auth::user()->role->slug == 'SrOpManager')
+                                  <a href="{{ route('sropmanager') }}" class="nav-link">Home</a>
+                                  @elseif(Auth::user()->role->slug == 'user')
+                                  <a href="{{ route('home') }}" class="nav-link">Home</a>
+                                  @endif
                                 </li>
                                 <li class="nav-item">
                                   <a class="nav-link" href="#" onclick="event.preventDefault();document.getElementById('logout-form').submit();"> Logout </a>
@@ -58,7 +68,7 @@
               </nav>
             @endif
         </div>
-        <div class="flex-center position-ref full-height">
+        <div class="flex-center position-ref full-height" >
             @yield('content')
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
