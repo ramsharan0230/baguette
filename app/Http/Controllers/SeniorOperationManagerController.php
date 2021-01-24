@@ -37,6 +37,13 @@ class SeniorOperationManagerController extends Controller
         return redirect()->route('sropmanager.users')->with(['success'=>"User has been Approved successfully!!!"]);
     }
 
+    public function unApproveUser($id){
+        $id = (int) $id;
+        User::where('id', $id)->update(['approved'=>0]);
+
+        return redirect()->route('sropmanager.users')->with(['success'=>"User has been UnApproved successfully!!!"]);
+    }
+
     public function suspendUser($id){
         User::where('id', $id)->update(['suspended'=>'suspended']);
 

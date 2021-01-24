@@ -65,6 +65,7 @@ Route::group(['middleware'=>'SrOpManager', 'prefix'=>'sropmanager'], function(){
     Route::get('users', 'SeniorOperationManagerController@users')->name('sropmanager.users');
     Route::post('changeRole', 'SeniorOperationManagerController@changeRole')->name('sropmanager.changeRole');
     Route::get('user/{id}/changeStatus', 'SeniorOperationManagerController@changeStatus')->name('sropmanager.user.changeStatus');
+    Route::get('user/{id}/unApproveUser', 'SeniorOperationManagerController@unApproveUser')->name('sropmanager.user.unApproveUser');
     Route::get('user/{id}/suspend', 'SeniorOperationManagerController@suspendUser')->name('sropmanager.user.suspend');
     Route::get('user/{id}/unsuspend', 'SeniorOperationManagerController@unSuspendUser')->name('sropmanager.user.unsuspend');
 

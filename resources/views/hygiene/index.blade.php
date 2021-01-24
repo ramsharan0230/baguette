@@ -93,7 +93,7 @@
                                 </div>
                             </div>
                             @endif   
-                            <button data-id="{{ $inspection->id }}" data-closing_date="{{ $inspection->closing_date }}" class="col-sm-6 mt-2 btn btn-primary btn-sm review" data-toggle='modal' data-target='#showReviewModel'><i class="fa fa-eye"></i></button>
+                            <button data-id="{{ $inspection->id }}" data-closing_date="{{ $inspection->closing_date }}" class="col-sm-6 mt-2 btn btn-primary btn-sm review" data-toggle='modal' data-target='#showReviewModel' title="View Reviews"><i class="fa fa-eye"></i></button>
                         </td>
                     </tr>
                     @empty

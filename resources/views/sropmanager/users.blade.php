@@ -52,6 +52,12 @@
                             @elseif($user->suspended =='suspended')
                             <a href="{{ route('sropmanager.user.unsuspend', $user->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-times"></i> UnSuspend</a>
                             @endif
+
+                            @if($user->approved==0)
+                            <a href="{{ route('sropmanager.user.changeStatus', $user->id) }}" class="btn btn-sm btn-success"><i class="fa fa-user-times"></i> Approve</a>
+                            @else
+                            <a href="{{ route('sropmanager.user.unApproveUser', $user->id) }}" class="btn btn-sm btn-warning"><i class="fa fa-user-check"></i> unApprove</a>
+                            @endif
                         
                         </td> 
                     </tr>

@@ -65,7 +65,7 @@
                             @else
                             <button data-id="{{ $inspection->id }}" class="btn btn-sm btn-danger unApprove" data-toggle='modal' data-target='#unapproveSitemanModal'> Unapprove</button>
                             @endif
-                            <button data-id="{{ $inspection->id }}" class="btn btn-primary btn-sm review" data-toggle='modal' data-target='#showReviewModel'><i class="fa fa-eye"></i></button>
+                            <button data-id="{{ $inspection->id }}" class="btn btn-primary btn-sm review" data-toggle='modal' data-target='#showReviewModel' title="View Reviews"><i class="fa fa-eye"></i></button>
                         </td> 
                     </tr>
                     @empty
