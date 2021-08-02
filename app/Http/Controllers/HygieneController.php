@@ -20,13 +20,13 @@ class HygieneController extends Controller
         // dd(123);
         $inspections = Inspection::where('approvedBy_hygiene', 1)->latest()->get();
         $pdf = PDF::loadView('hygiene.reports.submitted.submitted-pdf', compact('inspections'));
-        return $pdf->download('hygiene-submitted-report.pdf');
+        return $pdf->setPaper('a3', 'landscape')->stream('hygiene-submitted-report.pdf');
     }
 
     public function unSubmittedReport(){
         $inspections = Inspection::where('approvedBy_hygiene', 0)->latest()->get();
         $pdf = PDF::loadView('hygiene.reports.submitted.unsubmitted-pdf', compact('inspections'));
-        return $pdf->download('hygiene-unsubmitted-report.pdf');
+        return $pdf->setPaper('a3', 'landscape')->stream('hygiene-unsubmitted-report.pdf');
     }
 
     public function submittedReportExcel(){

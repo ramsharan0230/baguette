@@ -10,10 +10,10 @@
                 <li class="menu-item-has-children dropdown show">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> <i class="menu-icon fa fa-bar-chart"></i>Reports</a>
                     <ul class="sub-menu children dropdown-menu show">
-                        <li><i style="color:red" class="menu-icon fa fa-file-pdf-o"></i><a href="{{ route('inspection.pdf.report.submitted') }}">Submitted(pdf)</a></li>
-                        <li><i style="color:red" class="menu-icon fa fa-file-pdf-o"></i><a href="{{ route('inspection.pdf.report.unsubmitted') }}">Unsubmitted(pdf)</a></li>
-                        <li><i style="color:green" class="menu-icon fa fa-file-excel-o"></i><a href="{{ route('inspection.excel.report.submitted') }}">Submitted(excel)</a></li>
-                        <li><i style="color:green" class="menu-icon fa fa-file-excel-o"></i><a href="{{ route('inspection.excel.report.unsubmitted') }}">Unsubmitted(excel)</a></li>
+                        <li><i style="color:red" class="menu-icon fa fa-file-pdf-o"></i><a target="_blank" href="{{ route('inspection.pdf.report.submitted') }}">Submitted(pdf)</a></li>
+                        <li><i style="color:red" class="menu-icon fa fa-file-pdf-o"></i><a target="_blank" href="{{ route('inspection.pdf.report.unsubmitted') }}">Unsubmitted(pdf)</a></li>
+                        {{-- <li><i style="color:green" class="menu-icon fa fa-file-excel-o"></i><a  target="_blank"href="{{ route('inspection.excel.report.submitted') }}">Submitted(excel)</a></li>
+                        <li><i style="color:green" class="menu-icon fa fa-file-excel-o"></i><a target="_blank" href="{{ route('inspection.excel.report.unsubmitted') }}">Unsubmitted(excel)</a></li> --}}
                     </ul>
                 </li>
 
